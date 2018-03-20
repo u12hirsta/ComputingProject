@@ -1,5 +1,6 @@
 // Constants used for easy changing if needed to.
 
+
 final float MAX_TURN_AMOUNT = HALF_PI;
 final int MAX_TURN_TIMER = 60;
 final int MIN_TURN_TIMER = 1;
@@ -7,11 +8,15 @@ final float BACTERIA_VEL = 2.5;
 
 int bactNumber;
 int bacteriaDiameter;
+boolean allDead = false;
 
 ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
 
+void settings(){
+    size(500, 500);
+}
+
 void setup() {
-  size(800, 800);
   bactNumber = round(width/random(5, 15)); 
   
   bacteriaDiameter = width/32;
@@ -32,7 +37,11 @@ void draw() {
   for (int i = 0; i < bacteria.size(); i++) {
     bacteria.get(i).display();
   }
-  if (allInfect && resetTimer == 0) {
+  if(bacteria.size() == 0){
+    println("All dead");
+    resetTimer = 0;
+  }
+  if (allInfect && resetTimer == 0 || resetTimer == 0 && allDead == true) {
     resetTimer = 60;
   }
   if (resetTimer != 0 && --resetTimer==0) {
@@ -56,7 +65,6 @@ int resetTimer = 0;
 
 void reset(int NUMBER_OF_BACTERIA) {
   bacteria = new ArrayList<Bacteria>();
-  bactNumber = round(width/random(5, 15)); 
   for (int i = 0; i < NUMBER_OF_BACTERIA; i++) {
     bacteria.add(new Bacteria(random(0, width), random(0, height), bacteriaDiameter));
   }
