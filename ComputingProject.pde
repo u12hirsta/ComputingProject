@@ -12,7 +12,7 @@ ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
 
 void setup() {
   size(800, 800);
-  bactNumber = round(width/random(1,80)); 
+  bactNumber = round(width/random(5, 15)); 
   
   bacteriaDiameter = width/32;
   reset(bactNumber);
@@ -43,7 +43,6 @@ void draw() {
       bacteria.remove(i);
     } 
   }
-  println(bacteria.size());
 }
 
 void keyPressed() {
@@ -57,6 +56,7 @@ int resetTimer = 0;
 
 void reset(int NUMBER_OF_BACTERIA) {
   bacteria = new ArrayList<Bacteria>();
+  bactNumber = round(width/random(5, 15)); 
   for (int i = 0; i < NUMBER_OF_BACTERIA; i++) {
     bacteria.add(new Bacteria(random(0, width), random(0, height), bacteriaDiameter));
   }

@@ -1,14 +1,14 @@
-// Class for the Bacterium
+ // Class for the Bacterium
 
-class Bacteria {
+class Bactium {
   boolean infected = false;
   float diameter;
   float hunger = random(8000, 15000);
   float hungerDecayRate = random(0.95, 0.99);
-  PVector vel = new PVector(BACTERIA_VEL, 0);
+  PVector vel = new PVector(Bactium_VEL, 0);
   PVector pos;
   int timer = 1;
-  Bacteria(float _xPos, float _yPos, float _diameter) {
+  Bactium(float _xPos, float _yPos, float _diameter) {
     pos = new PVector(_xPos, _yPos);
     diameter = _diameter;
     vel.rotate(random(0, TAU));
@@ -37,7 +37,7 @@ class Bacteria {
     }
     hunger *= hungerDecayRate;
   }
-  void collide(Bacteria bact) {
+  void collide(Bactium bact) {
     if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < diameter) {
       vel.rotate(PI);
       bact.vel.rotate(PI);
