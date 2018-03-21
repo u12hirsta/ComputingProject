@@ -1,4 +1,4 @@
- // Class for the Bacterium
+// Class for the Bacterium
 class Bacteria {
   // Checking it's infected so colour can change
   boolean infected = false;
@@ -61,9 +61,13 @@ class Bacteria {
   void collide(Bacteria bact) {
     // Checking whether the bacteria collide with another
     if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < diameter) {
+      // If the bacteria collide with eachother then they rotate 180 degrees or pi radians  
       vel.rotate(PI);
+      // The other bacteria rotates by 180 degrees
       bact.vel.rotate(PI);
+      // They then move by 2 velocity to move out of the way of the bacterias
       pos.add(vel).add(vel);
+      // If one of the bacteria is in infected then the other gets infected too.
       if(infected == true || bact.infected == true){
         infected = true;
         bact.infected = true;
