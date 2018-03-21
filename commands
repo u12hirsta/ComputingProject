@@ -1,0 +1,9 @@
+git commit -m "<Commit Message>"
+git push origin master
+
+
+#To add a new file:
+git add <filename>
+
+#To fetch changes:
+git pull

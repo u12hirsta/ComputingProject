@@ -12,13 +12,13 @@ boolean allDead = false;
 
 ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
 
-void settings(){
-    size(500, 500);
+void settings() {
+  size(800, 800);
 }
 
 void setup() {
   bactNumber = round(width/random(5, 15)); 
-  
+
   bacteriaDiameter = width/32;
   reset(bactNumber);
 }
@@ -37,20 +37,17 @@ void draw() {
   for (int i = 0; i < bacteria.size(); i++) {
     bacteria.get(i).display();
   }
-  if(bacteria.size() == 0){
+  if (bacteria.size() == 0) {
     println("All dead");
-    resetTimer = 0;
-  }
-  if (allInfect && resetTimer == 0 || resetTimer == 0 && allDead == true) {
-    resetTimer = 60;
-  }
-  if (resetTimer != 0 && --resetTimer==0) {
     reset(bactNumber);
   }
-  for(int i = bacteria.size()-1; i >= 0; i--){
-    if(bacteria.get(i).hunger <= 0.01){
+  if (allInfect) {
+    reset(bactNumber);
+  }
+  for (int i = bacteria.size()-1; i >= 0; i--) {
+    if (bacteria.get(i).hunger <= 0.01) {
       bacteria.remove(i);
-    } 
+    }
   }
 }
 
