@@ -1,4 +1,5 @@
  // Class for the Bacterium
+ //sdgfhyuasdgfsdj
 
 class Bacteria {
   boolean infected = false;
