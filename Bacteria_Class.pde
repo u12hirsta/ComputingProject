@@ -74,4 +74,7 @@ class Bacteria {
       }
     }
   }
+  void eat(Food food){
+    
+  }
 }
