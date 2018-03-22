@@ -11,6 +11,10 @@ final float BACTERIA_VEL = 2.5;
 int bactNumber;
 int bacteriaRadius;
 
+// Max food is the maximum amount of food on the canvas
+int maxFood = 100;
+
+
 // allDead boolean is used to check whether all of the bacteria are dead
 // If they are all dead then the simulation will end
 boolean allDead = false;
@@ -19,6 +23,10 @@ boolean allInfect = true;
 // ArrayList which stores all the bacteria because you can remove items
 // From the list and the list changes size.
 ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
+
+// ArrayList for food because it will be eaten and then removed from the canvas and ArrayList completely
+ArrayList<Food> food = new ArrayList<Food>();
+
 
 // Settings done so if I wanted to change the size then I could
 void settings() {
@@ -41,6 +49,16 @@ void draw() {
   allInfect = true;
   // Black background
   background(0);
+  // Creates food and puts them into the canvas
+  if(food.size() <= maxFood){
+    for (int i = 0; i <= maxFood-food.size(); i++){
+      food.add(new Food(random(0, width), random(0, height), random(round(width/200), round(width/175))));
+    }
+  }
+  // Displays food
+  for (int i = 0; i < food.size(); i++) {
+    food.get(i).display();
+  }
   // For every bacteria in the ArrayList it will run them and make them move
   for (int i = 0; i < bacteria.size(); i++) {
     bacteria.get(i).run();
@@ -75,7 +93,7 @@ void draw() {
 void keyPressed() {
   // Force reset
   if (key == ' ') {
-    reset(bactNumber);
+    reset(bactNumber);  
   }
 }
 
