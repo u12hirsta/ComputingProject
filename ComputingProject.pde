@@ -36,7 +36,7 @@ void settings() {
 void setup() {
   // The number of bacteria is equal to an 8th of the width 
   // So that when there is a smaller width the canvas is not really crowded.
-  bactNumber = round(width/8); 
+  bactNumber = round(width/16); 
   // The size of the bacteria is also proportional to the width because as the canvas decreases 
   // So will the radius
   bacteriaRadius = width/32;
@@ -52,12 +52,18 @@ void draw() {
   // Creates food and puts them into the canvas
   if(food.size() <= maxFood){
     for (int i = 0; i <= maxFood-food.size(); i++){
-      food.add(new Food(random(0, width), random(0, height), random(round(width/200), round(width/175))));
+      food.add(new Food(random(0, width), random(0, height), random(round(width/100), round(width/50))));
     }
   }
   // Displays food
   for (int i = 0; i < food.size(); i++) {
     food.get(i).display();
+  }
+  // Checking whether a piece of food has been eaten
+  for (int i = 0; i < food.size(); i++){
+   if(food.get(i).eaten == true){
+    food.remove(i); 
+   }
   }
   // For every bacteria in the ArrayList it will run them and make them move
   for (int i = 0; i < bacteria.size(); i++) {
@@ -69,6 +75,12 @@ void draw() {
     for (int j = i+1; j < bacteria.size(); j++) {
       bacteria.get(i).collide(bacteria.get(j));
     }
+  }
+  // Checks every bacteria is touching any food
+  for (int i = 0; i < bacteria.size(); i++){
+   for (int j  = 0; j <food.size(); j++){
+     bacteria.get(i).eat(food.get(j));
+   }
   }
   // For every bacteria, it will call the display function and display the bacteria
   for (int i = 0; i < bacteria.size(); i++) {
@@ -88,6 +100,8 @@ void draw() {
       bacteria.remove(i);
     }
   }
+  fill(255);
+  text(frameRate, 100, 100);
 }
 
 void keyPressed() {
@@ -104,4 +118,5 @@ void reset(int NUMBER_OF_BACTERIA) {
     bacteria.add(new Bacteria(random(0, width), random(0, height), bacteriaRadius));
   }
   bacteria.get(0).infected = true;
+  food = new ArrayList<Food>();
 }

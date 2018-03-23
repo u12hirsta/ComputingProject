@@ -75,6 +75,11 @@ class Bacteria {
     }
   }
   void eat(Food food){
-    
+    // Checking whether colliding with food
+    if (dist(pos.x, pos.y, food.xPos, food.yPos) < (diameter/2)+(food.diameter/2)){
+     // When food is touched, it will replenish hunger depending on the size of the food
+     hunger += (food.diameter)/32;
+     food.eaten = true;
+    }
   }
 }
