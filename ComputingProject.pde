@@ -36,7 +36,7 @@ void settings() {
 void setup() {
   // The number of bacteria is equal to an 8th of the width 
   // So that when there is a smaller width the canvas is not really crowded.
-  bactNumber = round(width/16); 
+  bactNumber = round(width/32 ); 
   // The size of the bacteria is also proportional to the width because as the canvas decreases 
   // So will the radius
   bacteriaRadius = width/32;
