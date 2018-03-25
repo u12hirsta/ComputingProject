@@ -17,7 +17,7 @@ class Food {
     fill(0, 0, 255);
     ellipse(xPos, yPos, diameter, diameter);
     if(eaten == false){
-      diameter += diameter*0.001;
+      diameter += constrain(diameter*0.001, 0, 50);
     }
   }
 }
