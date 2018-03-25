@@ -7,12 +7,14 @@ class Bacteria {
   // Hunger will deplete over time
   float hunger = random(8000, 15000);
   // The metabolic rate is how much it will decrease by
-  float metabolicRate = random(0.95, 0.99);
+  float metabolicRate = random(0.95, 0.9999999999);
   // Velocity vector will be the speed and direction and will be add to position
   PVector vel = new PVector(BACTERIA_VEL, 0);
   // Position vector
   PVector pos;
   int timer = 1;
+  // Changing diameter
+  float newDiameter;
   // Constructor
   Bacteria(float _xPos, float _yPos, float _diameter) {
     pos = new PVector(_xPos, _yPos);
@@ -25,14 +27,15 @@ class Bacteria {
     // If they are infected then they will be green
     // As the hunger decreases then so will the transparency 
     if (infected){
-      fill(0, 255, 0, constrain(hunger*255, 60, 255));
+      fill(0, 255, 0, map(hunger*255, 0, 5000, 30, 255));
     } else { // If they are not infected they will be white
-      fill(255, 255, 255, constrain((hunger)*255, 60, 255));
+      fill(255, 255, 255, map(hunger*255, 0, 5000, 30, 255));
       // If they is one that is not infected, then the allInfected boolean is false
       allInfect = false;
     }
     // This is the actual bacteria
-    ellipse(pos.x, pos.y, diameter, diameter);
+    newDiameter = map(diameter*hunger, 0, 1000000, 25, 200);
+    ellipse(pos.x, pos.y, newDiameter, newDiameter);
   }
   void run() {
     // Every certain amount of time it will choose a random direction to rotate too
@@ -60,7 +63,7 @@ class Bacteria {
   }
   void collide(Bacteria bact) {
     // Checking whether the bacteria collide with another
-    if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < diameter) {
+    if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < newDiameter) {
       // If the bacteria collide with eachother then they rotate 180 degrees or pi radians  
       vel.rotate(PI);
       // The other bacteria rotates by 180 degrees
@@ -76,7 +79,7 @@ class Bacteria {
   }
   void eat(Food food){
     // Checking whether colliding with food
-    if (dist(pos.x, pos.y, food.xPos, food.yPos) < (diameter/2)+(food.diameter/2)){
+    if (dist(pos.x, pos.y, food.xPos, food.yPos) < (newDiameter/2)+(food.diameter/2)){
      // When food is touched, it will replenish hunger depending on the size of the food
      hunger += (food.diameter)/32;
      food.eaten = true;
