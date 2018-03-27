@@ -16,8 +16,8 @@ class Food {
     // So easily distinguishable from the bacteria
     fill(0, 0, 255);
     ellipse(xPos, yPos, diameter, diameter);
-    if(eaten == false){
-      diameter += constrain(diameter*0.001, 0, 50);
+    if(eaten == false && diameter < 25){
+      diameter += diameter*0.001;
     }
   }
 }

@@ -5,6 +5,7 @@ final float MAX_TURN_AMOUNT = HALF_PI;
 final int MAX_TURN_TIMER = 60;
 final int MIN_TURN_TIMER = 1;
 final float BACTERIA_VEL = 2.5;
+final int BREEDING_TIME = 50;
 
 // Bacteria number and diameter will change depending on the size of the canvas
 // So they aren't constants
@@ -12,7 +13,7 @@ int bactNumber;
 int bacteriaRadius;
 
 // Max food is the maximum amount of food on the canvas
-int maxFood = 100;
+int maxFood = round(random(0, 75));
 
 
 // allDead boolean is used to check whether all of the bacteria are dead
@@ -36,7 +37,7 @@ void settings() {
 void setup() {
   // The number of bacteria is equal to an 8th of the width 
   // So that when there is a smaller width the canvas is not really crowded.
-  bactNumber = round(width/32 ); 
+  bactNumber = round(width/random(16, 32)); 
   // The size of the bacteria is also proportional to the width because as the canvas decreases 
   // So will the radius
   bacteriaRadius = width/32;
