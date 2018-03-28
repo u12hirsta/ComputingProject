@@ -4,16 +4,22 @@
 final float MAX_TURN_AMOUNT = HALF_PI;
 final int MAX_TURN_TIMER = 60;
 final int MIN_TURN_TIMER = 1;
-final float BACTERIA_VEL = 2.5;
+final float MIN_BACTERIA_VEL = 1.0;
+final float MAX_BACTERIA_VEL = 2.5;
 final int BREEDING_TIME = 50;
+final int MIN_HUNGER = 8000;
+final int MAX_HUNGER = 15000;
+final float MIN_META = 0.90;
+final float MAX_META = 0.99;
+final int MAX_FOOD = int(random(0, 75));
+final float MIN_DIAMETER = 20;
+final float MAX_DIAMETER = 30;
 
 // Bacteria number and diameter will change depending on the size of the canvas
 // So they aren't constants
 int bactNumber;
 int bacteriaRadius;
 
-// Max food is the maximum amount of food on the canvas
-int maxFood = round(random(0, 75));
 
 
 // allDead boolean is used to check whether all of the bacteria are dead
@@ -31,7 +37,7 @@ ArrayList<Food> food = new ArrayList<Food>();
 
 // Settings done so if I wanted to change the size then I could
 void settings() {
-  size(800, 800);
+  size(600, 600);
 }
 
 void setup() {
@@ -51,8 +57,8 @@ void draw() {
   // Black background
   background(0);
   // Creates food and puts them into the canvas
-  if(food.size() <= maxFood){
-    for (int i = 0; i <= maxFood-food.size(); i++){
+  if(food.size() <= MAX_FOOD){
+    for (int i = 0; i <= MAX_FOOD-food.size(); i++){
       food.add(new Food(random(0, width), random(0, height), random(round(width/100), round(width/50))));
     }
   }
@@ -97,7 +103,7 @@ void draw() {
   }
   // If the hunger is less than 0.01 then the bacteria will be removed from the canvas
   for (int i = bacteria.size()-1; i >= 0; i--) {
-    if (bacteria.get(i).hunger <= 0.01) {
+    if (bacteria.get(i).hunger <= 0.1) {
       bacteria.remove(i);
     }
   }
@@ -116,8 +122,7 @@ void keyPressed() {
 void reset(int NUMBER_OF_BACTERIA) {
   bacteria = new ArrayList<Bacteria>();
   for (int i = 0; i < NUMBER_OF_BACTERIA; i++) {
-    bacteria.add(new Bacteria(random(0, width), random(0, height), bacteriaRadius));
+    bacteria.add(new Bacteria(random(0, width), random(0, height)));
   }
-  bacteria.get(0).infected = true;
   food = new ArrayList<Food>();
 }
