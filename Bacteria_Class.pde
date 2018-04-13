@@ -4,6 +4,8 @@ class Bacteria {
   float breedingChance = random(1);
   // Checking it's infected so colour can change
   boolean infected = false;
+  // Boolean for whether menu is open
+  boolean menu = false;
   // Diameter of bacteria
   float diameter;
   // Hunger will deplete over time
@@ -15,111 +17,202 @@ class Bacteria {
   // Position vector
   PVector pos;
   int rotateTimer = 1;
-  int breedTimer = BREEDING_TIME; 
+  int breedTimerOriginal = int(random(30, 100)); 
+  int breedTimer = 50; 
   float severity;
   // Constructor
   Bacteria(float _xPos, float _yPos) {
     pos = new PVector(_xPos, _yPos);
-    for(int i = 0; i < dna.length; i++){
-      dna[i] = int(random(100)); 
+    for (int i = 0; i < dna.length; i++) {
+      dna[i] = int(random(100));
     }
     create();
     // Setting a random rotation for the Velocity
     vel.rotate(random(0, TAU));
   }
-  Bacteria(Bacteria b1, Bacteria b2){
+  Bacteria(Bacteria b1, Bacteria b2) {
     pos = new PVector(lerp(b1.pos.x, b2.pos.x, random(1)), lerp(b1.pos.y, b2.pos.y, random(1)));
-    for(int i = 0; i < dna.length; i++){
+    for (int i = 0; i < dna.length; i++) {
       dna[i] = constrain((random(1)<0.5?b1.dna[i]:b2.dna[i])+random(1)<0.1?int(random(-2, 2)):0, 0, 100);
-  }
+    }
     infected = (b1.infected && b2.infected) || ((b1.infected || b2.infected) && random(1) < 0.5); 
     create();
   }
-  float getCode(int n, float min, float max){
+  float getCode(int n, float min, float max) {
     float returnValue = map(dna[n], 0, 100, min, max);
     return returnValue;
   }
   void create() {
     diameter = getCode(0, MIN_DIAMETER, MAX_DIAMETER);
     metabolicRate = getCode(1, MIN_META, MAX_META);
-    vel = new PVector(getCode(2, MIN_BACTERIA_VEL, MAX_BACTERIA_VEL),  0);
+    vel = new PVector(getCode(2, MIN_BACTERIA_VEL, MAX_BACTERIA_VEL), 0);
     vel.rotate(random(0, TAU));
   }
   // Function for displaying the bacterium
   void display() {
+    if(menu){
+      menu();
+    }
     // If they are infected then they will be green
     // As the hunger decreases then so will the transparency 
-    if (infected){
-      fill(0, 255, 0, map(hunger, 0, 5000, 30, 255));
-    } else { // If they are not infected they will be white
+    if (severity != 0) {
+      fill(0, map(severity*255, 0, 255, 50, 255), 0, map(hunger, 0, 5000, 30, 255));
+      // If they are not infected they will be white
+    } else {
       fill(255, 255, 255, map(hunger, 0, 5000, 30, 255));
-      // If they is one that is not infected, then the allInfected boolean is false
+    }
+    if (infected == false) { // If they is one that is not infected, then the allInfected boolean is false
       allInfect = false;
     }
     // This is the actual bacteria
     ellipse(pos.x, pos.y, diameter, diameter);
   }
   void run() {
-    if (breedTimer > 0){
-      breedTimer --;
-    }
-    if (severity >= 0.5){
-     infected = true; 
-    }
-    // Every certain amount of time it will choose a random direction to rotate too
-    if (--rotateTimer == 0) {
-      vel.rotate(random(-MAX_TURN_AMOUNT, MAX_TURN_AMOUNT));
-      // Then timer is set to a random interval before it turns again
-      rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
-    }
-    // This is how the bacteria move
-    pos.add(vel);
-    // If the bacteria is outside the canvas then... 
-    // It will constrain itself within the canvas
-    // And turn itself 180 degrees
-    if(pos.x >= width || pos.x <= 0){
-     pos.x = constrain(pos.x, 0, width);
-     vel.rotate(PI);
-    }
-    if(pos.y >= height || pos.y <= 0){
-     pos.y = constrain(pos.y, 0, height);
-     vel.rotate(PI);
-    }
-    // Hunger will times by metabolic rate every frame
-    // This will decrease it.
-    /* Tried the method
-    hunger = pow(hunger, metabolicRate);
-    Did not work to how I wanted it too 
-    Instead having it linear like this...*/
-    if(infected){
-      hunger -= 30*metabolicRate;
-    }else { // Infected will die of hunger faster because they are fighting off the disease
-      hunger -= 25*metabolicRate;
+    if (move == true) {
+      if (breedTimer > 0) {
+        breedTimer --;
+      }
+      if (severity >= 0.5) {
+        infected = true;
+      }
+      // Every certain amount of time it will choose a random direction to rotate too
+      if (--rotateTimer == 0) {
+        vel.rotate(random(-MAX_TURN_AMOUNT, MAX_TURN_AMOUNT));
+        // Then timer is set to a random interval before it turns again
+        rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
+      }
+      // This is how the bacteria move
+      pos.add(vel);
+      // If the bacteria is outside the canvas then... 
+      // It will constrain itself within the canvas
+      // And turn itself 180 degrees
+      if (pos.x >= width || pos.x <= 0) {
+        pos.x = constrain(pos.x, 0, width);
+        vel.rotate(PI);
+      }
+      if (pos.y >= height || pos.y <= 0) {
+        pos.y = constrain(pos.y, 0, height);
+        vel.rotate(PI);
+      }
+      // Hunger will times by metabolic rate every frame
+      // This will decrease it.
+      /* Tried the method
+       hunger = pow(hunger, metabolicRate);
+       Did not work to how I wanted it too 
+       Instead having it linear like this...*/
+      if (infected) {
+        hunger -= 30*severity*metabolicRate;
+      } else { // Infected will die of hunger faster because they are fighting off the disease
+        hunger -= 20*metabolicRate;
+      }
     }
   }
   void collide(Bacteria bact) {
-    // Checking whether the bacteria collide with another
-    if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < diameter/2+bact.diameter/2) {
-      // If one of the bacteria is in infected then the other gets infected too.
-      float thisTemp = constrain(severity + bact.severity, 0, 1);
-      float bactTemp = constrain(severity + bact.severity, 0, 1);
-      severity = thisTemp;
-      bact.severity = bactTemp;
-      if (random(1) <= breedingChance*bact.breedingChance && breedTimer == 0 && bact.breedTimer == 0){
-        bacteria.add(new Bacteria(this, bact));
-        breedTimer = BREEDING_TIME;
-        bact.breedTimer = BREEDING_TIME;
+    if (move == true) {
+      // Checking whether the bacteria collide with another
+      if (dist(pos.x, pos.y, bact.pos.x, bact.pos.y) < diameter/2+bact.diameter/2 && random(1) < severity) {
+        // If the severity of one bacteria is higher than the other then it will infect the other 
+        // If the severity is the same nothing will happen
+        if (severity < bact.severity) {
+          severity = bact.severity;
+        } else if (severity > bact.severity) {
+          bact.severity = severity;
+        }
+        //float thisTemp = constrain(severity + bact.severity/2, 0, 1);
+        //float bactTemp = constrain(severity/2 + bact.severity, 0, 1);
+        //severity = thisTemp;
+        //bact.severity = bactTemp;
+        if (random(1) <= breedingChance*bact.breedingChance && breedTimer == 0 && bact.breedTimer == 0) {
+          bacteria.add(new Bacteria(this, bact));
+          breedTimer = breedTimerOriginal;
+          bact.breedTimer = breedTimerOriginal;
+        }
       }
     }
-    
   }
-  void eat(Food food){
+  void eat(Food food) {
     // Checking whether colliding with food
-    if (dist(pos.x, pos.y, food.xPos, food.yPos) < (diameter/2)+(food.diameter/2)){
-     // When food is touched, it will replenish hunger depending on the size of the food
-     hunger += (food.diameter)/32;
-     severity += food.infectSeverity;
-     food.eaten = true;
+    if (dist(pos.x, pos.y, food.xPos, food.yPos) < (diameter/2)+(food.diameter/2)) {
+      // When food is touched, it will replenish hunger depending on the size of the food
+      hunger += (food.diameter)/32;
+      severity += food.infectSeverity;
+      food.eaten = true;
+    }
+  }
+  void clicked() {
+    if (dist(pos.x, pos.y, mouseX, mouseY) < diameter/2 && mousePressed && pos.x <= width-150 && pos.y <= height-200 && menuOpen == false) {
+      menu = true;
+      move = false;
+      menuOpen = true;
+    }
+  }
+  void data() {
+    fill(255);
+    text(breedingChance +"\n" + severity + "\n" + hunger + "\n", pos.x+diameter/2, pos.y);
+  }
+  void menu() {
+    fill(255);
+    rectMode(CORNER);
+    rect(pos.x, pos.y, 150, 200, 20);
+    fill(200, 0, 0);
+    ellipse(pos.x+150, pos.y, 25, 25);
+    textAlign(LEFT, CENTER);
+
+    textSize(10);
+    fill(0);
+    String hung = nf(hunger, 0, 2);
+    text("Hunger: "+hung, pos.x+10, pos.y+12.5);
+    String meta = nf(metabolicRate, 0, 2);
+    text("Metabolic rate: "+meta, pos.x+10, pos.y+27.5);
+    String breeding = nf(breedingChance, 0, 2);
+    text("Breeding chance: "+breeding, pos.x+10, pos.y+42.5);
+    String sev = nf(severity, 0, 2);
+    text("Severity: "+sev, pos.x+10, pos.y+57.5);
+    fill(0, 255, 0);
+    rect(pos.x+105, pos.y+6, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+105 && mouseX <= pos.x+120 && mouseY <= pos.y+21 && mouseY >= pos.y+6 && hunger< 15000){
+     hunger++; 
+    }
+    fill(255, 0, 0);
+    rect(pos.x+120, pos.y+6, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+120 && mouseX <= pos.x+135 && mouseY <= pos.y+21 && mouseY >= pos.y+6 && hunger>100){
+     hunger--; 
+    }
+    fill(0, 255, 0);
+    rect(pos.x+110, pos.y+21, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+110 && mouseX <= pos.x+125 && mouseY <= pos.y+36 && mouseY >= pos.y+21 && metabolicRate<0.99){
+     float metaCurrent = metabolicRate+0.01; 
+     metabolicRate = getCode(1, metaCurrent, metaCurrent);
+    }
+    fill(255, 0, 0);
+    rect(pos.x+125, pos.y+21, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+125 && mouseX <= pos.x+140 && mouseY <= pos.y+36 && mouseY >= pos.y+21 && metabolicRate>0.5){
+     metabolicRate-= 0.01; 
+    }    
+    fill(0, 255, 0);
+    rect(pos.x+120, pos.y+36, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+120 && mouseX <= pos.x+135 && mouseY <= pos.y+51 && mouseY >= pos.y+36 && breedingChance<1){
+     breedingChance += 0.01; 
+    }
+    fill(255, 0, 0);
+    rect(pos.x+135, pos.y+36, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+135 && mouseX <= pos.x+150 && mouseY <= pos.y+51&& mouseY >= pos.y+36 && breedingChance>0.01){
+     breedingChance-= 0.01; 
+    }
+    fill(0, 255, 0);
+    rect(pos.x+120, pos.y+51, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+120 && mouseX <= pos.x+135 && mouseY <= pos.y+66 && mouseY >= pos.y+51 && severity<0.99){
+     severity += 0.01; 
+    }
+    fill(255, 0, 0);
+    rect(pos.x+135, pos.y+51, 15, 15, 2);
+    if(mousePressed && mouseX >= pos.x+135 && mouseX <= pos.x+150 && mouseY <= pos.y+66&& mouseY >= pos.y+51 && severity>0.01 ){
+     severity-= 0.01; 
+    }
+    if (mousePressed && mouseX <= pos.x+162.5 && mouseX >= pos.x+137.5 && mouseY <= pos.y+12.5 && mouseY >= pos.y-12.5) {
+      move = true;
+      menu = false;
+      menuOpen = false;
     }
   }
 }
