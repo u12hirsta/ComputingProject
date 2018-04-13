@@ -6,12 +6,10 @@ final int MAX_TURN_TIMER = 60;
 final int MIN_TURN_TIMER = 1;
 final float MIN_BACTERIA_VEL = 1.0;
 final float MAX_BACTERIA_VEL = 2.5;
-final int BREEDING_TIME = 50;
 final int MIN_HUNGER = 8000;
 final int MAX_HUNGER = 15000;
 final float MIN_META = 0.90;
 final float MAX_META = 0.99;
-final int MAX_FOOD = int(random(0, 75));
 final float MIN_DIAMETER = 20;
 final float MAX_DIAMETER = 30;
 
@@ -19,14 +17,15 @@ final float MAX_DIAMETER = 30;
 // So they aren't constants
 int bactNumber;
 int bacteriaRadius;
-
-
+int maxFood = int(random(20, 75));
 
 // allDead boolean is used to check whether all of the bacteria are dead
 // If they are all dead then the simulation will end
 boolean allDead = false;
 boolean allInfect = true;
-
+boolean display = false;
+boolean move = true;
+boolean menuOpen = false;
 // ArrayList which stores all the bacteria because you can remove items
 // From the list and the list changes size.
 ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
@@ -57,8 +56,8 @@ void draw() {
   // Black background
   background(0);
   // Creates food and puts them into the canvas
-  if(food.size() <= MAX_FOOD){
-    for (int i = 0; i <= MAX_FOOD-food.size(); i++){
+  if(food.size() <= maxFood){
+    for (int i = 0; i <= maxFood-food.size(); i++){
       food.add(new Food(random(0, width), random(0, height), random(round(width/100), round(width/50))));
     }
   }
@@ -107,6 +106,11 @@ void draw() {
       bacteria.remove(i);
     }
   }
+  if (display){
+    for (int i = bacteria.size()-1; i >= 0; i--) {
+     bacteria.get(i).data();
+    }
+  }
   fill(255);
   text(frameRate, 100, 100);
 }
@@ -115,6 +119,17 @@ void keyPressed() {
   // Force reset
   if (key == ' ') {
     reset(bactNumber);  
+  }
+  if (key == 'F' || key == 'f'){
+   maxFood += 1;
+   maxFood = constrain(maxFood, 0, 100);
+  }
+  if (key == 'g' || key == 'G'){
+   maxFood -= 1;
+   maxFood = constrain(maxFood, -1, 100);
+  }
+  if (key == 'd' || key == 'D'){
+   display = !display;
   }
 }
 
@@ -125,4 +140,11 @@ void reset(int NUMBER_OF_BACTERIA) {
     bacteria.add(new Bacteria(random(0, width), random(0, height)));
   }
   food = new ArrayList<Food>();
+  bacteria.get(0).severity = 0.1;
+}
+
+void mousePressed(){
+ for(int i = 0; i<bacteria.size(); i++){
+  bacteria.get(i).clicked(); 
+ }
 }
