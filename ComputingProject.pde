@@ -13,6 +13,7 @@ final float MAX_META = 0.99;
 final float MIN_DIAMETER = 20;
 final float MAX_DIAMETER = 30;
 
+
 // Bacteria number and diameter will change depending on the size of the canvas
 // So they aren't constants
 int bactNumber;
@@ -26,6 +27,8 @@ boolean allInfect = true;
 boolean display = false;
 boolean move = true;
 boolean menuOpen = false;
+
+Button[] button = new Button[8];
 // ArrayList which stores all the bacteria because you can remove items
 // From the list and the list changes size.
 ArrayList<Bacteria> bacteria = new ArrayList<Bacteria>();
@@ -48,6 +51,9 @@ void setup() {
   bacteriaRadius = width/32;
   // The bacteria are drawn on the canvas in the reset function
   reset(bactNumber);
+  PFont mono = createFont("UbuntuMono.ttf", 26);
+  textFont(mono);
+  textSize(height*0.024);
 }
 
 void draw() {
