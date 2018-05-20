@@ -1,8 +1,11 @@
 // Computing project version 2.0
 boolean main = true;
 boolean sim = false;
+boolean settings = false;
+boolean setted = false;
 Main mainMen;
 Simulation simulation;
+Settings setting;
 
 void setup() {
   rectMode(CENTER);
@@ -12,11 +15,15 @@ void setup() {
   textFont(mono);
   mainMen = new Main();
   simulation = new Simulation();
+  setting  = new Settings();
 }
 void draw() {
   if (main) {
     mainMen.display();
-  } else if(sim){
+  } else if (sim) {
     simulation.run();
+  } else if (settings) {
+    setted = true;
+    setting.display();
   }
 }
