@@ -10,6 +10,7 @@ class Main {
   void display() {
     background(0);
     for (int i = 0; i<noButts; i++) {
+      fill(255);
       buttons[i].display(); 
       buttons[i].hover();
     }

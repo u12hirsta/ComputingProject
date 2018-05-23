@@ -14,7 +14,6 @@ class Button {
     
   }
   void display() {
-    fill(255);
     rect(pos.x, pos.y, currentSize.x, currentSize.y, CORNER_CURVE);
     fill(0);
     textSize(currentTextSize);

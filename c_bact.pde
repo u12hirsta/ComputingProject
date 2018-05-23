@@ -1,16 +1,17 @@
 class Bact {
   PVector pos, size, vel;
   float rad, meta;
-  float[] dna = {rad, //Numbers between 1 and a 100 represent each of the DNA values.
-               meta,
-               65, 
-               3, 
-               2};
+  int[] dna = {10, //Numbers between 1 and a 100 represent each of the DNA values.
+    21, 
+    65, 
+    3, 
+    2};          
+
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
-  Bact(PVector pos, PVector size) {
+  Bact(PVector pos) {
     this.pos = pos;
-    this.size = size;
     vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
+    size = new PVector(map(dna[0], 0, 100, 20, 60), map(dna[0], 0, 100, 20, 60));
   }
   void display() {
     fill(255);
@@ -33,6 +34,29 @@ class Bact {
     pos.add(vel);
   }
   void collide(Bact bact) {
-    
+  }
+  void create() {
+    for (int i = 0; i < dna.length; i++) {
+      dna[i] = int(random(0, 100));
+    }
+  }
+  void increase(int val) {
+    if (dna[val] < 100) {
+      dna[val]++;
+      change();
+    }
+  }
+  void decrease(int val){
+   if (dna[val] > 0 ){
+    dna[val]--; 
+    change();
+   }
+  }
+  void change(){
+    size = new PVector(map(dna[0], 0, 100, 20, 30), map(dna[0], 0, 100, 20, 30));
+  }
+  String define(int val) {
+    float act = map(val, 0, 100, 0, 1);
+    return str(act);
   }
 }
