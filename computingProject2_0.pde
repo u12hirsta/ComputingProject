@@ -25,7 +25,7 @@ void setup() {
 
 
   for (int i = 0; i<noBacts; i++) {
-    bacts.add(new Bact(new PVector(random(0, width), random(0, height))));
+    bacts.add(new Bact(new PVector(random(0, width), random(0, height)), new PVector(30, 30)));
   }
   settings = new Settings();
   simulation = new Simulation();
