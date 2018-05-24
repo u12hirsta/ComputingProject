@@ -1,19 +1,16 @@
 // Computing project version 2.0
 boolean main = true;
 boolean sim = false;
-<<<<<<< HEAD
 boolean settings = false;
 boolean setted = false;
 Main mainMen;
 Simulation simulation;
 Settings setting;
-=======
 int noBacts = 20;
 Main mainMen;
 Simulation simulation;
 ArrayList<Bact> bacts = new ArrayList<Bact>();
 Settings settings;
->>>>>>> edc489b704e4d0d92d3e212ab0165c1e285f993b
 
 void setup() {
   rectMode(CENTER);
@@ -36,13 +33,8 @@ void draw() {
     mainMen.display();
   } else if (sim) {
     simulation.run();
-<<<<<<< HEAD
   } else if (settings) {
     setted = true;
     setting.display();
-=======
-  } else {
-    settings.display();
->>>>>>> edc489b704e4d0d92d3e212ab0165c1e285f993b
-  }
+  } 
 }
