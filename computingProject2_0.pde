@@ -7,11 +7,7 @@ Main mainMen;
 Simulation simulation;
 Settings setting;
 int noBacts = 20;
-Main mainMen;
-Simulation simulation;
 ArrayList<Bact> bacts = new ArrayList<Bact>();
-Settings settings;
-
 void setup() {
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
@@ -24,7 +20,7 @@ void setup() {
   for (int i = 0; i<noBacts; i++) {
     bacts.add(new Bact(new PVector(random(0, width), random(0, height))));
   }
-  settings = new Settings();
+  setting = new Settings();
   simulation = new Simulation();
   setting  = new Settings();
 }

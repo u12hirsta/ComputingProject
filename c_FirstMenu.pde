@@ -1,7 +1,7 @@
 class Main {
-  int noButts = 10;
+  int noButts = 3;
   Button[] buttons = new Button[noButts]; 
-  String[] buttonText = {"a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c"};
+  String[] buttonText = {"Go", "Set values", "Quit"};
   Main() {
     for (int i = 0; i<noButts; i++) {
       buttons[i] = new Button(new PVector(width*0.5, height*(0.3*(i+1))), new PVector(width*0.2, height*0.1), buttonText[i]);
