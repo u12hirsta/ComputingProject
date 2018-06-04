@@ -1,3 +1,5 @@
+import g4p_controls.*;
+
 // Computing project version 2.0
 boolean main = true;
 boolean sim = false;

@@ -1,7 +1,7 @@
 class Bact {
   PVector pos, size, vel;
   float rad, meta;
-  int[] dna = {10, //Numbers between 1 and a 100 represent each of the DNA values.
+  int[] dna = {10, //Numbers between 0 and a 100 represent each of the DNA values.
     21, 
     65, 
     3, 
@@ -11,11 +11,12 @@ class Bact {
   Bact(PVector pos) {
     this.pos = pos;
     vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
-    size = new PVector(map(dna[0], 0, 100, 20, 60), map(dna[0], 0, 100, 20, 60));
+    size = new PVector(map(dna[0], 0, 100, 0, 100), map(dna[0], 0, 100, 0, 100));
   }
   void display() {
     fill(255);
     ellipse(pos.x, pos.y, size.x, size.y);
+    text("Hi", pos.x, pos.y);
   }
   void move() {
     if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
@@ -41,22 +42,21 @@ class Bact {
     }
   }
   void increase(int val) {
-    if (dna[val] < 100) {
+    if (dna[val] <= 100) {
       dna[val]++;
-      change();
+      change(val);
     }
   }
   void decrease(int val){
-   if (dna[val] > 0 ){
+   if (dna[val] >= 0 ){
     dna[val]--; 
-    change();
+    change(val);
    }
   }
-  void change(){
-    size = new PVector(map(dna[0], 0, 100, 20, 30), map(dna[0], 0, 100, 20, 30));
+  void change(int val){
+    size = new PVector(map(dna[val], 0, 100, 0, 100), map(dna[val], 0, 100, 0, 100));
   }
   String define(int val) {
-    float act = map(val, 0, 100, 0, 1);
-    return str(act);
+    return str(val);
   }
 }

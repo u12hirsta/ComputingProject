@@ -17,7 +17,7 @@ class Settings {
     for (int i = 0; i<noTabs; i++) {
       tabs[i].display();
       tabs[i].increase(bactNo);
-      tabs[i].textDisplay("diameter", bacts.get(i).define(bacts.get(bactNo).dna[0]));
+      tabs[i].textDisplay("diameter", bacts.get(bactNo).define(bacts.get(bactNo).dna[0]));
     }
     fill(255);
     menu.display();
