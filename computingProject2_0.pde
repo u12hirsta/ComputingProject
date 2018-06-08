@@ -17,8 +17,6 @@ void setup() {
   PFont mono = createFont("UbuntuMono.ttf", 26);
   textFont(mono);
   mainMen = new Main();
-
-
   for (int i = 0; i<noBacts; i++) {
     bacts.add(new Bact(new PVector(random(0, width), random(0, height))));
   }

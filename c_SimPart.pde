@@ -13,6 +13,12 @@ class Simulation {
       bacts.get(i).display();
       bacts.get(i).move();
     }
+    for (int i = 0; i<noBacts; i++) {
+      if(bacts.get(i).size.x < 3){
+       bacts.remove(i); 
+       noBacts--;
+      }
+    }
     if(menu.clicked()){
       main = true;
       sim = false;
