@@ -1,7 +1,7 @@
 class Bact {
   PVector pos, size, vel;
   float rad, meta;
-  float breedCoolDown = millis();
+  float breedCoolDown = int(random(50, 500));
   int[] dna = {int(random(0, 100)), //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), 
     int(random(0, 10)), 
@@ -21,12 +21,12 @@ class Bact {
    vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
   }
   void display() {
-    breedCoolDown = millis();
     fill(255);
     ellipse(pos.x, pos.y, size.x, size.y);
-    if(breedCoolDown % random(25, 30) == 0){
+    if(--breedCoolDown == 0 && size.x >= 2){
       multiply();
     }
+    size.add(new PVector(0.05, 0.05));
   }
   void move() {
     if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
@@ -73,5 +73,6 @@ class Bact {
    size.div(2);
    bacts.add(new Bact(this)); 
    noBacts++;
+   breedCoolDown = int(random(50, 500));
   }
 }

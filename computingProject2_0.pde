@@ -1,4 +1,4 @@
-import g4p_controls.*;
+
 
 // Computing project version 2.0
 boolean main = true;
@@ -8,7 +8,7 @@ boolean setted = false;
 Main mainMen;
 Simulation simulation;
 Settings setting;
-int noBacts = 20;
+int noBacts = 1;
 ArrayList<Bact> bacts = new ArrayList<Bact>();
 void setup() {
   rectMode(CENTER);
@@ -33,4 +33,10 @@ void draw() {
     setted = true;
     setting.display();
   } 
+  for (int i = 0; i<noBacts; i++) {
+    if (bacts.get(i).size.x <= 0.99) {
+      bacts.remove(i);
+      noBacts--;
+    }
+  }
 }
