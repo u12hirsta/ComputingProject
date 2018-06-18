@@ -20,7 +20,7 @@ class Settings {
     }
     fill(255);
     textSize(30);
-    text(bactNo, width*0.8, height*0.03);
+    text(bactNo+1, width*0.8, height*0.03);
     clickCheck();
   }
   void clickCheck() {
@@ -33,13 +33,20 @@ class Settings {
     fill(255);
     menu.display();
     menu.hover();  
-    if(change[0].clicked() && bactNo >= 1){
+    if (change[0].clicked() && bactNo >= 1) {
       bactNo--;
-      for(int i = 0; i<NO_TABS; i++){
-        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[0], 0, 100, width*0.5, width*0.625));
+      delay(100);
+      for (int i = 0; i<NO_TABS; i++) {
+        tabs[i].bactNo = this.bactNo;
+        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.5, width*0.625));
       }
-    }else if(change[1].clicked() && bactNo < noBacts-1){
-     bactNo++; 
+    } else if (change[1].clicked() && bactNo < noBacts-1) {
+      bactNo++; 
+      delay(100);
+      for (int i = 0; i<NO_TABS; i++) {
+        tabs[i].bactNo = this.bactNo;
+        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.5, width*0.625));
+      }
     }
     if (menu.clicked()) {
       main = true;
@@ -48,7 +55,7 @@ class Settings {
   }
   void create() {
     for (int i = 0; i<NO_TABS; i++) {
-      tabs[i] = new IncreaseDecrease(height*((1f/(NO_TABS))*(i+0.5)), i, bactNo);
+      tabs[i] = new IncreaseDecrease(height*((1f/(NO_TABS))*(i+0.5)), i);
     }
   }
 }
