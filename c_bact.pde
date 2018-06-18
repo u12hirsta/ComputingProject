@@ -2,11 +2,18 @@ class Bact {
   PVector pos, size, vel;
   float rad, meta;
   float breedCoolDown = int(random(50, 500));
-  int[] dna = {int(random(0, 100)), //Numbers between 0 and a 100 represent each of the DNA values.
+  int[] dna = {int(random(0, 100)),// Diameter //Numbers between 0 and a 100 represent each of the DNA values.
+    int(random(0, 100)), // Mutation chance
+    int(random(0, 100)), // Hue value
     int(random(0, 100)), 
-    int(random(0, 10)), 
+    int(random(0, 100)),
     int(random(0, 100)), 
-    int(random(0, 100))};          
+    int(random(0, 100)), 
+    int(random(0, 100)), 
+    int(random(0, 100))}; 
+ String[] dnaText = {"Diameters", "Mut Chance", "Hue Value",
+                     "??????", "??????", "??????", "??????", 
+                     "??????", "??????", "??????", "??????"};
 
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
   Bact(PVector pos) {
@@ -16,14 +23,17 @@ class Bact {
   }
   Bact(Bact self){
    this.pos = self.pos.copy();
-   this.dna = self.dna;
+   arrayCopy(self.dna, this.dna);
+   if(random(100)<dna[1]) dna[2] = int((dna[2]+random(-5,5)+100)%100);
    this.size = self.size.copy();
    vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
+   
   }
   void display() {
-    fill(255);
+    stroke(0);
+    fill(map(dna[2], 0, 100, 0, 255), 255, 255);
     ellipse(pos.x, pos.y, size.x, size.y);
-    if(--breedCoolDown == 0 && size.x >= 2){
+    if(--breedCoolDown == 0){
       multiply();
     }
     size.add(new PVector(0.05, 0.05));
@@ -51,20 +61,8 @@ class Bact {
       dna[i] = int(random(0, 100));
     }
   }
-  void increase(int val) {
-    if (dna[val] < MAX_DIAMETER) {
-      dna[val]++;
-      change(val);
-    }
-  }
-  void decrease(int val){
-   if (dna[val] > MIN_DIAMETER){
-    dna[val]--; 
-    change(val);
-   }
-  }
-  void change(int val){
-    size = new PVector(map(dna[val], 0, 100, 0, 100), map(dna[val], 0, 100, 0, 100));
+  void change(){
+     size = new PVector(map(dna[0], 0, 100, 2, 100), map(dna[0], 0, 100, 2, 100));
   }
   String define(int val) {
     return str(val);

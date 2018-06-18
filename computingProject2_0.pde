@@ -1,16 +1,19 @@
-
-
+import java.util.Arrays;
 // Computing project version 2.0
 boolean main = true;
 boolean sim = false;
 boolean settings = false;
 boolean setted = false;
+
 Main mainMen;
 Simulation simulation;
 Settings setting;
-int noBacts = 1;
+int noBacts = 20;
+
 ArrayList<Bact> bacts = new ArrayList<Bact>();
+
 void setup() {
+  colorMode(HSB);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   size(600, 600);
@@ -24,6 +27,7 @@ void setup() {
   simulation = new Simulation();
   setting  = new Settings();
 }
+
 void draw() {
   if (main) {
     mainMen.display();

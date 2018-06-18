@@ -13,12 +13,14 @@ class Button {
     currentTextSize = textSize;
     
   }
+  
   void display() {
     rect(pos.x, pos.y, currentSize.x, currentSize.y, CORNER_CURVE);
     fill(0);
     textSize(currentTextSize);
     text(text, pos.x, pos.y);
   }
+  
   Boolean hover() {
     if (mouseX <= pos.x+(currentSize.x*0.5) && mouseX >= pos.x-(currentSize.y*0.5) && mouseY <= pos.y+(currentSize.y*0.5) && mouseY >= pos.y-(currentSize.y*0.5)) {
       currentSize = PVector.mult(size, HOVER_MULTIPLIER);
@@ -29,6 +31,7 @@ class Button {
       return false;
     }
   }
+  
   Boolean clicked(){
     if (mouseX <= pos.x+(currentSize.x*0.5) && mouseX >= pos.x-(currentSize.y*0.5) && mouseY <= pos.y+(currentSize.y*0.5) && mouseY >= pos.y-(currentSize.y*0.5) && mousePressed) {
       return true;
@@ -36,6 +39,7 @@ class Button {
       return false;
     }
   }
+  
   void textSizeScaler(String text){
     textSize = text.length()<10?size.x/(text.length()):((size.x/text.length())*2);
   }

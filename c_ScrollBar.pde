@@ -8,17 +8,13 @@ class ScrollBar {
   ScrollBar(PVector pos, PVector size, float sXPos) {
     this.pos = new PVector();
     this.pos = pos;
-    sPos.y = pos.y;
-    sPos.x = sXPos;
-    sSize.x = size.x/16;
-    sSize.y = size.y;
     this.size = new PVector();
     this.size = size;
     minPos = pos.x-size.x/2;
     maxPos = pos.x+size.x/2;
-    newPos = sPos;
-    
+    changeX(sXPos);
   }
+  
   void update() {
     if (overEvent()) {
       over = true;
@@ -57,5 +53,12 @@ class ScrollBar {
   }
   float getPos(int min, int max){
    return map(sPos.x, minPos, maxPos, min, max);
+  }
+  void changeX(float sXPos){
+    sPos.y = pos.y;
+    sPos.x = sXPos;
+    sSize.x = size.x/16;
+    sSize.y = size.y;
+    newPos = sPos;
   }
 }

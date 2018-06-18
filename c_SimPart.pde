@@ -14,7 +14,7 @@ class Simulation {
       bacts.get(i).move();
     }
     for (int i = 0; i<noBacts; i++) {
-      if(bacts.get(i).size.x < 3){
+      if(bacts.get(i).size.x <= 1){
        bacts.remove(i); 
        noBacts--;
       }
