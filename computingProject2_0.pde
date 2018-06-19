@@ -8,12 +8,13 @@ boolean setted = false;
 Main mainMen;
 Simulation simulation;
 Settings setting;
-int noBacts = 20;
+int noBacts = 1;
 
 ArrayList<Bact> bacts = new ArrayList<Bact>();
+int var1, var2, var3;
 
 void setup() {
-  colorMode(HSB);
+  colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   size(600, 600);
@@ -29,6 +30,14 @@ void setup() {
 }
 
 void draw() {
+  //var1 = int(bacts.size()*0.25);
+  //var2 = int(bacts.size()*0.5);
+  //var3 = int(bacts.size()*0.75);
+  //thread("threaded1");
+  //thread("threaded2");
+  //thread("threaded3");
+  //thread("threaded4");
+  
   if (main) {
     mainMen.display();
   } else if (sim) {
@@ -44,3 +53,25 @@ void draw() {
     }
   }
 }
+
+//void threaded1(){
+//  for(int i = 0; i < var1; i++){
+//    bacts.get(i).move();
+//  }
+//}
+
+//void threaded2(){
+//  for(int i = var1; i < var2; i++){
+//    bacts.get(i).move();
+//  }
+//}
+//void threaded3(){
+//  for(int i = var2; i < var3; i++){
+//    bacts.get(i).move();
+//  }
+//}
+//void threaded4(){
+//  for(int i = var3; i < bacts.size(); i++){
+//    bacts.get(i).move();
+//  }
+//}

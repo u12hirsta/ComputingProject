@@ -11,7 +11,7 @@ class Main {
   void display() {
     background(0);
     for (int i = 0; i<noButts; i++) {
-      fill(255);
+      fill(0, 0, 100);
       buttons[i].display(); 
       buttons[i].hover();
     }

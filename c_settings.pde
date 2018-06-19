@@ -1,5 +1,5 @@
 class Settings {
-  final int NO_TABS = 4;
+  final int NO_TABS = 5;
   int bactNo = 0;
   int noButts = 2;
   Button[] change = new Button[noButts];
@@ -21,10 +21,11 @@ class Settings {
     background(0);
     for (int i = 0; i < noButts; i++) {
 
-      fill(255);
+      fill(0, 0, 100);
       change[i].display();
       change[i].hover();
     }
+    bacts.get(bactNo).display();
     //for (int i = 0; i < NO_TABS; i++) {
     //  if (clicked[i]) {
     //    clickAll[i].filler(color(200, 255, 255));
@@ -36,7 +37,7 @@ class Settings {
 
 
     //}
-    fill(255);
+    fill(0, 0, 100);
     textSize(30);
     text(bactNo+1, width*0.8, height*0.03);
     clickCheck();
@@ -54,7 +55,7 @@ class Settings {
       //  delay(100);
       //}
     }
-    fill(255);
+    fill(0, 0, 100);
     menu.display();
     menu.hover();  
     if (change[0].clicked() && bactNo >= 1) {
@@ -62,14 +63,14 @@ class Settings {
       delay(100);
       for (int i = 0; i<NO_TABS; i++) {
         tabs[i].bactNo = this.bactNo;
-        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.5, width*0.625));
+        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.375, width*0.625));
       }
     } else if (change[1].clicked() && bactNo < noBacts-1) {
       bactNo++; 
       delay(100);
       for (int i = 0; i<NO_TABS; i++) {
         tabs[i].bactNo = this.bactNo;
-        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.5, width*0.625));
+        tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.375, width*0.625));
       }
     }
     if (menu.clicked()) {

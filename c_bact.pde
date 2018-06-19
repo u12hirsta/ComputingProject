@@ -2,18 +2,18 @@ class Bact {
   PVector pos, size, vel;
   float rad, meta;
   boolean multiply = true; 
-  float breedCoolDown = int(random(50, 500));
+  float breedCoolDown;
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), // Mutation chance
     int(random(0, 100)), // Hue value
     int(random(0, 100)), //Increase Amount
-    int(random(0, 100)), 
+    int(random(100, 100)), // Breed Timer
     int(random(0, 100)), 
     int(random(0, 100)), 
     int(random(0, 100)), 
     int(random(0, 100))}; 
-  String[] dnaText = {"Diameters", "Mut Chance", "Hue Value", 
-    "Incr Amount", "??????", "??????", "??????", 
+  String[] dnaText = {"Diameter", "Mutation \nChance", "Hue Value", 
+    "Increase \n Amount", "Breed Timer", "??????", "??????", 
     "??????", "??????", "??????", "??????"};
 
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
@@ -21,6 +21,7 @@ class Bact {
     this.pos = pos;
     vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
+    breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
   }
   Bact(Bact self) {
     this.pos = self.pos.copy();
@@ -30,16 +31,12 @@ class Bact {
     }
     this.size = self.size.copy();
     vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
+    breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
   }
   void display() {
     stroke(0);
-    fill(map(dna[2], 0, 100, 0, 255), 255, 255);
+    fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
-    if (--breedCoolDown == 0) {
-      multiply();
-    }
-    
-    size.add(new PVector(map(dna[4], 0, 100, 0, 0.1), map(dna[4], 0, 100, 0, 0.1)));
   }
   void move() {
     if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
@@ -56,8 +53,8 @@ class Bact {
       rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
     }
     pos.add(vel);
-  }
-  void collide(Bact bact) {
+    
+    
   }
   void create() {
     for (int i = 0; i < dna.length; i++) {
@@ -70,29 +67,39 @@ class Bact {
   String define(int val) {
     return str(val);
   }
+  void breedCheck(){
+       if (--breedCoolDown <= 0) {
+      multiply();
+    } 
+  }
   void multiply() {
-    if (multiply) {
+    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
+    //if (noBacts < 1000) {
       size.div(2);
       bacts.add(new Bact(this)); 
       noBacts++;
-      breedCoolDown = int(random(50, 500));
-      for (int i=0; i<10; i++) { 
-        if (noBacts >= i*10 && noBacts <= (1+1)*10) {
-          breedCoolDown += i*50;
-        } 
-        if (noBacts > 1000) {
-          multiply = false;
-        }
-        if (size.x >= i*50 && size.x <= (i+1)*50) {
-          breedCoolDown -= i*50;
-        } else if (size.x <= i*50) {
-          breedCoolDown += i*50;
-        }
-      }
-    } else {
-      if (noBacts < 1000) {
-        multiply = true;
-      }
-    }
+    //  
+    //  for (int i=0; i<10; i++) { 
+    //    if (noBacts >= i*10 && noBacts <= (1+1)*10) {
+    //      breedCoolDown += i*50;
+    //    } 
+    //    if (noBacts > 1000) {
+    //      multiply = false;
+    //    }
+    //    if (size.x >= i*50 && size.x <= (i+1)*50) {
+    //      breedCoolDown -= i*50;
+    //    } else if (size.x <= i*50) {
+    //      breedCoolDown += i*50;
+    //    }
+    //  }
+    //} else {
+    //  if (noBacts < 1000) {
+    //    multiply = true;
+    //  }
+    //}
+  }
+  void sizeChange(){
+   size.add(new PVector(map(dna[4], 0, 100, 0, 0.1), map(dna[4], 0, 100, 0, 0.1))); 
+   dna[0] = int(size.x);
   }
 }

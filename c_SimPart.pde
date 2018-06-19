@@ -6,12 +6,13 @@ class Simulation {
   }
   void run() {
     background(0);
-    fill(255);
-    menu.display();
-    menu.hover();
+    
+    
     for (int i = 0; i<noBacts; i++) {
       bacts.get(i).display();
       bacts.get(i).move();
+      bacts.get(i).breedCheck();
+      bacts.get(i).sizeChange();
     }
     for (int i = 0; i<noBacts; i++) {
       if(bacts.get(i).size.x <= 1){
@@ -23,12 +24,8 @@ class Simulation {
       main = true;
       sim = false;
     }
-  }
-  void bactCollision() {
-    for (int i = 0; i<noBacts; i++) {
-      for (int j = 1; j<noBacts; j++) {
-        bacts.get(i).collide(bacts.get(j));
-      }
-    }
+    fill(0, 0, 100);
+    menu.display();
+    menu.hover();
   }
 }

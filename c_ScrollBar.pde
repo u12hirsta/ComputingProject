@@ -5,6 +5,7 @@ class ScrollBar {
   PVector sPos = new PVector();  
   boolean over, locked;
   float minPos, maxPos; 
+  int smooth = 17;
   ScrollBar(PVector pos, PVector size, float sXPos) {
     this.pos = new PVector();
     this.pos = pos;
@@ -30,7 +31,7 @@ class ScrollBar {
       newPos.x = constrain(mouseX, minPos, maxPos);
     }
     if (abs(newPos.x - sPos.x) > 1) {
-      sPos.x = sPos.x + (newPos.x-sPos.x);
+      sPos.x = sPos.x + (newPos.x-sPos.x)/smooth;
     }
   }
   boolean overEvent() {
@@ -42,12 +43,12 @@ class ScrollBar {
   }
   void display() {
     noStroke();
-    fill(204);
+    fill(0, 0, 80);
     rect(pos.x, pos.y, size.x, size.y);
     if (over || locked) {
-      fill(50);
+      fill(0, 0, 20);
     } else {
-      fill(102);
+      fill(0, 0, 40);
     }
     rect(sPos.x, sPos.y, sSize.x, sSize.y);
   }
