@@ -2,14 +2,19 @@ class Settings {
   final int NO_TABS = 5;
   int bactNo = 0;
   int noButts = 2;
+  int increaseDecreaseBtn = 2;
   Button[] change = new Button[noButts];
   //boolean[] clicked = new boolean[NO_TABS];
   //Button[] clickAll = new Button[NO_TABS];
+  Button[] changeNoBacts = new Button[increaseDecreaseBtn];
   IncreaseDecrease[] tabs = new IncreaseDecrease[NO_TABS];
   Button menu = new Button(new PVector(width*0.05, height*0.025), new PVector(width*0.1, height*0.05), "Menu");
   Settings() {
     for (int i = 0; i <noButts; i++) {
       change[i] = new Button(new PVector(width*(0.70+(0.2*i)), height*0.03), new PVector(height*0.05, height*0.05), "");
+    }
+    for (int i = 0; i <increaseDecreaseBtn; i++) {
+      changeNoBacts[i] = new Button(new PVector(width*(0.2+(0.2*i)), height*0.025), new PVector(height*0.05, height*0.05), i==0?"-":"+");
     }
     //for (int i = 0; i < NO_TABS; i++) {
     //  clickAll[i] = new Button(new PVector(width*0.9, height*((1f/(NO_TABS))*(i+0.5))), new PVector(width*0.05, height*0.05 ), "");
@@ -25,6 +30,15 @@ class Settings {
       change[i].display();
       change[i].hover();
     }
+    for (int i = 0; i < increaseDecreaseBtn; i++) {
+      fill(0, 0, 100);
+      changeNoBacts[i].display();
+      changeNoBacts[i].hover();
+    }
+    fill(0, 0, 100);
+    textSize(14);
+    text("Add/\nRemove bacteria", width*0.3, height*0.04);
+    text("Number of bacteria = " + noBacts, width*0.8, height*0.95);
     bacts.get(bactNo).display();
     //for (int i = 0; i < NO_TABS; i++) {
     //  if (clicked[i]) {
@@ -54,6 +68,15 @@ class Settings {
       //  clicked[i] = false;
       //  delay(100);
       //}
+    }
+    if (changeNoBacts[0].clicked() && bacts.size() > 1) {
+      noBacts--;
+      bacts.remove(bactNo); 
+      delay(100);
+    } else if (changeNoBacts[1].clicked() ){
+      noBacts++;
+      bacts.add(new Bact(new PVector(random(width), random(height)))); 
+      delay(100);
     }
     fill(0, 0, 100);
     menu.display();

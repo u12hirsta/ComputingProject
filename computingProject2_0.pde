@@ -30,6 +30,9 @@ void setup() {
 }
 
 void draw() {
+  for(int i = 0; i < noBacts; i++){
+   bacts.get(i).move(); 
+  }
   //var1 = int(bacts.size()*0.25);
   //var2 = int(bacts.size()*0.5);
   //var3 = int(bacts.size()*0.75);
