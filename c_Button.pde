@@ -13,7 +13,9 @@ class Button {
     currentTextSize = textSize;
     
   }
-  
+  void filler(color col){
+   fill(col); 
+  }
   void display() {
     rect(pos.x, pos.y, currentSize.x, currentSize.y, CORNER_CURVE);
     fill(0);
