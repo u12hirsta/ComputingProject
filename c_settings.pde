@@ -72,11 +72,11 @@ class Settings {
     if (changeNoBacts[0].clicked() && bacts.size() > 1) {
       noBacts--;
       bacts.remove(bactNo); 
-      delay(100);
+      delay(50);
     } else if (changeNoBacts[1].clicked() ){
       noBacts++;
       bacts.add(new Bact(new PVector(random(width), random(height)))); 
-      delay(100);
+      delay(50);
     }
     fill(0, 0, 100);
     menu.display();

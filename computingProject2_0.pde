@@ -1,4 +1,3 @@
-import java.util.Arrays;
 // Computing project version 2.0
 boolean main = true;
 boolean sim = false;
@@ -11,7 +10,7 @@ Settings setting;
 int noBacts = 1;
 
 ArrayList<Bact> bacts = new ArrayList<Bact>();
-int var1, var2, var3;
+//int var1, var2, var3;
 
 void setup() {
   colorMode(HSB, 360, 100, 100);
