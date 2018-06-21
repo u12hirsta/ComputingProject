@@ -7,9 +7,7 @@ class Simulation {
     
   }
   void run() {
-    background(map(temperature, -50, 100, 180, 360), 100, 75);
-    
-    
+    background(0, 100, 0);
     for (int i = 0; i<noBacts; i++) {
       bacts.get(i).display();
       bacts.get(i).move();
@@ -35,6 +33,7 @@ class Simulation {
     
     text("Temperature: "+ str(round(temperature)) + "ºC", width*0.85, height*0.95);
     temperature = tempSlide.getPos(-50, 100);
-    temperature = map(noise(frameCount*0.01),0,1,-50,100);
+    temperature = temperature+map(noise(frameCount*0.0001),0,1,-50,100);
+    //tempSlide.changeX(map(temperature, -50, 100, width*0.5, width*0.7));
   }
 } //<>//
