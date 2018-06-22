@@ -39,15 +39,16 @@ void draw() {
   //thread("threaded2");
   //thread("threaded3");
   //thread("threaded4");
-  
   if (main) {
     mainMen.display();
   } else if (sim) {
     simulation.run();
   } else if (settings) {
+    setting.changeSlider();
     setted = true;
     setting.display();
   } 
+  text(frameRate, width*0.9, height*0.1);
   for (int i = 0; i<noBacts; i++) {
     if (bacts.get(i).size.x <= 0.99) {
       bacts.remove(i);

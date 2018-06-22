@@ -1,5 +1,5 @@
 class Settings {
-  final int NO_TABS = 5;
+  final int NO_TABS = 6;
   int bactNo = 0;
   int noButts = 2;
   int increaseDecreaseBtn = 2;
@@ -104,6 +104,11 @@ class Settings {
   void create() {
     for (int i = 0; i<NO_TABS; i++) {
       tabs[i] = new IncreaseDecrease(height*((1f/(NO_TABS))*(i+0.5)), i);
+    }
+  }
+  void changeSlider() {
+    for (int i = 0; i<NO_TABS; i++) {
+      tabs[i].scroll.changeX(map(bacts.get(bactNo).dna[i], 0, 100, width*0.375, width*0.625));
     }
   }
 }

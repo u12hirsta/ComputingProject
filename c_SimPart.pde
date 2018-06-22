@@ -30,10 +30,20 @@ class Simulation {
     tempSlide.display();
     tempSlide.update();
     fill(0, 0, 100);
-    
+    if(temperature > 50){
+      for(int i = 0; i < noBacts; i++){
+       bacts.get(i).frozen = false;
+      }
+    }else if(temperature < -20){
+      for(int i = 0; i < noBacts; i++){
+       bacts.get(i).frozen = true;
+      }
+    }
     text("Temperature: "+ str(round(temperature)) + "ºC", width*0.85, height*0.95);
-    temperature = tempSlide.getPos(-50, 100);
-    temperature = temperature+map(noise(frameCount*0.0001),0,1,-50,100);
+    //temperature = temperature+map(noise(frameCount*0.0001),0,1,-50,100);
     //tempSlide.changeX(map(temperature, -50, 100, width*0.5, width*0.7));
+    temperature = tempSlide.getPos(-50, 100);
+    
+    
   }
 } //<>//

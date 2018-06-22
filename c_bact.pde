@@ -3,23 +3,26 @@ class Bact {
   float rad, meta;
   boolean multiply = true; 
   float breedCoolDown;
+  float minVel = -2.5;
+  float maxVel = 2.5;
+  boolean frozen = false;
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), // Mutation chance
     int(random(0, 100)), // Hue value
     int(random(0, 100)), //Increase Amount
-    int(random(100, 100)), // Breed Timer
-    int(random(0, 100)), 
+    int(random(0, 100)), // Breed Timer
+    int(random(0, 100)), // Heat Resistance
     int(random(0, 100)), 
     int(random(0, 100)), 
     int(random(0, 100))}; 
   String[] dnaText = {"Diameter", "Mutation \nChance", "Hue Value", 
-    "Increase \n Amount", "Breed Timer", "??????", "??????", 
+    "Increase \n Amount", "Breed Timer", "Heat \n reistance", "??????", 
     "??????", "??????", "??????", "??????"};
 
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
   Bact(PVector pos) {
     this.pos = pos;
-    vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
+    vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
     breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
   }
@@ -30,7 +33,7 @@ class Bact {
       if (random(100)<dna[1]) dna[i] = int((dna[i]+random(-5, 5)+100)%100);
     }
     this.size = self.size.copy();
-    vel = new PVector(random(MIN_VEL, MAX_VEL), random(MIN_VEL, MAX_VEL));
+    vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
     breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
   }
   void display() {
@@ -39,22 +42,22 @@ class Bact {
     ellipse(pos.x, pos.y, size.x, size.y);
   }
   void move() {
-    if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
-      pos.x = constrain(pos.x, size.x/2, width-size.x/2);
-      vel.rotate(PI);
+    if (!frozen) {
+      if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
+        pos.x = constrain(pos.x, size.x/2, width-size.x/2);
+        vel.rotate(PI);
+      }
+      if (pos.y >= height-size.y/2 || pos.y <= size.y/2) {
+        pos.y = constrain(pos.y, size.y/2, height-size.y/2);
+        vel.rotate(PI);
+      }
+      if (--rotateTimer == 0) {
+        vel.rotate(random(-MAX_TURN_AMOUNT, MAX_TURN_AMOUNT));
+        // Then timer is set to a random interval before it turns again
+        rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
+      }
+      pos.add(vel);
     }
-    if (pos.y >= height-size.y/2 || pos.y <= size.y/2) {
-      pos.y = constrain(pos.y, size.y/2, height-size.y/2);
-      vel.rotate(PI);
-    }
-    if (--rotateTimer == 0) {
-      vel.rotate(random(-MAX_TURN_AMOUNT, MAX_TURN_AMOUNT));
-      // Then timer is set to a random interval before it turns again
-      rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
-    }
-    pos.add(vel);
-    
-    
   }
   void create() {
     for (int i = 0; i < dna.length; i++) {
@@ -67,39 +70,30 @@ class Bact {
   String define(int val) {
     return str(val);
   }
-  void breedCheck(){
-       if (--breedCoolDown <= 0) {
-      multiply();
-    } 
+  void breedCheck() {
+    if (!frozen) {
+      if (--breedCoolDown <= 0) {
+        multiply();
+      }
+    }
   }
   void multiply() {
-    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
-    //if (noBacts < 1000) {
+    if (!frozen) {
+
+      breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
+      //if (noBacts < 1000) {
       size.div(2);
       bacts.add(new Bact(this)); 
       noBacts++;
-    //  
-    //  for (int i=0; i<10; i++) { 
-    //    if (noBacts >= i*10 && noBacts <= (1+1)*10) {
-    //      breedCoolDown += i*50;
-    //    } 
-    //    if (noBacts > 1000) {
-    //      multiply = false;
-    //    }
-    //    if (size.x >= i*50 && size.x <= (i+1)*50) {
-    //      breedCoolDown -= i*50;
-    //    } else if (size.x <= i*50) {
-    //      breedCoolDown += i*50;
-    //    }
-    //  }
-    //} else {
-    //  if (noBacts < 1000) {
-    //    multiply = true;
-    //  }
-    //}
+    }
   }
-  void sizeChange(){
-   size.add(new PVector(map(dna[4], 0, 100, 0, 0.1), map(dna[4], 0, 100, 0, 0.1))); 
-   dna[0] = int(size.x);
+  void sizeChange() {
+    if (!frozen) {
+
+      if (size.x <= 100) {
+        size.add(new PVector(map(dna[4], 0, 100, 0, 0.1), map(dna[4], 0, 100, 0, 0.1))); 
+        dna[0] = int(size.x);
+      }
+    }
   }
 }
