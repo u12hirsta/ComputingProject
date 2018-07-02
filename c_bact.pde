@@ -12,11 +12,11 @@ class Bact {
     int(random(0, 100)), //Increase Amount
     int(random(0, 100)), // Breed Timer
     int(random(0, 100)), // Heat Resistance
-    int(random(0, 100)), 
+    int(random(0, 100)), // Cell wall thickness
     int(random(0, 100)), 
     int(random(0, 100))}; 
   String[] dnaText = {"Diameter", "Mutation \nChance", "Hue Value", 
-    "Increase \n Amount", "Breed Timer", "Heat \n reistance", "??????", 
+    "Increase \n Amount", "Breed Timer", "Heat \n reistance", "Cell wall \nthickness", 
     "??????", "??????", "??????", "??????"};
 
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
@@ -37,7 +37,8 @@ class Bact {
     breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
   }
   void display() {
-    stroke(0);
+    stroke(200, 100, 100);
+    strokeWeight(map(dna[7], 0, 100, 0, 10));
     fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
   }

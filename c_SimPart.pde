@@ -6,7 +6,8 @@ class Simulation { //<>//
   Simulation() {
   }
   void run() {
-    background(0, 100, 0);
+    strokeWeight(1);
+    background(0, 0, 20);
     for (int i = 0; i < noNutrients; i++) {
       nutrients[i].display();
     }

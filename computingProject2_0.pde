@@ -19,6 +19,7 @@ void setup() {
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   size(600, 600);
+  strokeWeight(1);
   PFont mono = createFont("UbuntuMono.ttf", 26);
   textFont(mono);
   mainMen = new Main();

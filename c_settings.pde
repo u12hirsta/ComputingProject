@@ -1,5 +1,5 @@
 class Settings {
-  final int NO_TABS = 6;
+  final int NO_TABS = 7;
   int bactNo = 0;
   int noButts = 2;
   int increaseDecreaseBtn = 2;

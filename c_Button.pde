@@ -17,6 +17,8 @@ class Button {
    fill(col); 
   }
   void display() {
+    strokeWeight(1);
+    stroke(0);
     rect(pos.x, pos.y, currentSize.x, currentSize.y, CORNER_CURVE);
     fill(0);
     textSize(currentTextSize);
