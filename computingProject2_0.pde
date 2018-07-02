@@ -8,6 +8,8 @@ Main mainMen;
 Simulation simulation;
 Settings setting;
 int noBacts = 1;
+int noNutrients = 100;
+Nutrients[] nutrients = new Nutrients[noNutrients];
 
 ArrayList<Bact> bacts = new ArrayList<Bact>();
 //int var1, var2, var3;
@@ -26,9 +28,13 @@ void setup() {
   setting = new Settings();
   simulation = new Simulation();
   setting  = new Settings();
+  for(int i = 0; i<noNutrients; i++){
+    nutrients[i] = new Nutrients(int(random(9)), new PVector(random(width), random(height)));
+  }
 }
 
 void draw() {
+  
   for(int i = 0; i < noBacts; i++){
    bacts.get(i).move(); 
   }
