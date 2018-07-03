@@ -23,7 +23,7 @@ class Settings {
     create();
   }
   void display() {
-    background(0);
+    background(0, 0, 20);
     for (int i = 0; i < noButts; i++) {
 
       fill(0, 0, 100);

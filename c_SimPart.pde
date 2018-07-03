@@ -9,7 +9,7 @@ class Simulation { //<>//
     strokeWeight(1);
     background(0, 0, 20);
     for (int i = 0; i < noNutrients; i++) {
-      nutrients[i].display();
+      nutrients.get(i).display();
     }
 
     for (int i = 0; i<noBacts; i++) {

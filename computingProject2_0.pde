@@ -9,8 +9,9 @@ Simulation simulation;
 Settings setting;
 int noBacts = 1;
 int noNutrients = 100;
-Nutrients[] nutrients = new Nutrients[noNutrients];
 
+
+ArrayList<Nutrients> nutrients = new ArrayList<Nutrients>();
 ArrayList<Bact> bacts = new ArrayList<Bact>();
 //int var1, var2, var3;
 
@@ -18,7 +19,7 @@ void setup() {
   colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
-  size(600, 600);
+  size(600, 600, FX2D);
   strokeWeight(1);
   PFont mono = createFont("UbuntuMono.ttf", 26);
   textFont(mono);
@@ -30,12 +31,12 @@ void setup() {
   simulation = new Simulation();
   setting  = new Settings();
   for(int i = 0; i<noNutrients; i++){
-    nutrients[i] = new Nutrients(int(random(9)), new PVector(random(width), random(height)));
+    nutrients.add(new Nutrients(int(random(9)), new PVector(random(width), random(height))));
   }
 }
 
 void draw() {
-  
+  frameRate(60);
   for(int i = 0; i < noBacts; i++){
    bacts.get(i).move(); 
   }

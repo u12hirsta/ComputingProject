@@ -5,6 +5,7 @@ class Bact {
   float breedCoolDown;
   float minVel = -2.5;
   float maxVel = 2.5;
+  int cellWallThickness;
   boolean frozen = false;
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), // Mutation chance
@@ -17,14 +18,15 @@ class Bact {
     int(random(0, 100))}; 
   String[] dnaText = {"Diameter", "Mutation \nChance", "Hue Value", 
     "Increase \n Amount", "Breed Timer", "Heat \n reistance", "Cell wall \nthickness", 
-    "??????", "??????", "??????", "??????"};
+    "??????", "??????"};
 
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
   Bact(PVector pos) {
     this.pos = pos;
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
-    breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
+    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
+    cellWallThickness = int(map(dna[6], 0, 100, 1, 10));
   }
   Bact(Bact self) {
     this.pos = self.pos.copy();
@@ -34,11 +36,12 @@ class Bact {
     }
     this.size = self.size.copy();
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
-    breedCoolDown = int(map(dna[5], 0, 100, 0, 300));
+    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
+    cellWallThickness = int(map(dna[6], 0, 100, 1, 10));
   }
   void display() {
-    stroke(200, 100, 100);
-    strokeWeight(map(dna[7], 0, 100, 0, 10));
+    stroke(200, 0, 0);
+    strokeWeight(int(map(dna[6], 0, 100, 1, 10)));
     fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
   }
@@ -91,10 +94,10 @@ class Bact {
   void sizeChange() {
     if (!frozen) {
 
-      if (size.x <= 100) {
-        size.add(new PVector(map(dna[4], 0, 100, 0, 0.1), map(dna[4], 0, 100, 0, 0.1))); 
-        dna[0] = int(size.x);
+        if (size.x <= 100) {
+          size.add(new PVector(map(dna[3], 0, 100, 0, 0.1), map(dna[3], 0, 100, 0, 0.1))); 
+          dna[0] = int(size.x);
+        }
       }
     }
-  }
 }
