@@ -10,7 +10,7 @@ class Bact {
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), // Mutation chance
     int(random(0, 100)), // Hue value
-    int(random(0, 100)), //Increase Amount
+    //int(random(0, 100)), //Increase Amount
     int(random(0, 100)), // Breed Timer
     int(random(0, 100)), // Heat Resistance
     int(random(0, 100)), // Cell wall thickness
@@ -19,14 +19,14 @@ class Bact {
   String[] dnaText = {"Diameter", "Mutation \nChance", "Hue Value", 
     "Increase \n Amount", "Breed Timer", "Heat \n reistance", "Cell wall \nthickness", 
     "??????", "??????"};
-
+  int[] nutrientsAmount = {50, 50, 50, 50, 50, 50, 50, 50, 50};
   int rotateTimer = int(random(MIN_TURN_TIMER, MAX_TURN_TIMER));
   Bact(PVector pos) {
     this.pos = pos;
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
-    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
-    cellWallThickness = int(map(dna[6], 0, 100, 1, 10));
+    breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+    cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
   }
   Bact(Bact self) {
     this.pos = self.pos.copy();
@@ -36,12 +36,13 @@ class Bact {
     }
     this.size = self.size.copy();
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
-    breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
-    cellWallThickness = int(map(dna[6], 0, 100, 1, 10));
+    breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+    cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
+    arrayCopy(self.nutrientsAmount, this.nutrientsAmount);
   }
   void display() {
     stroke(200, 0, 0);
-    strokeWeight(int(map(dna[6], 0, 100, 1, 10)));
+    strokeWeight(int(map(dna[5], 0, 100, 1, 10)));
     fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
   }
@@ -84,7 +85,7 @@ class Bact {
   void multiply() {
     if (!frozen) {
 
-      breedCoolDown = int(map(dna[4], 0, 100, 0, 300));
+      breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
       //if (noBacts < 1000) {
       size.div(2);
       bacts.add(new Bact(this)); 
@@ -92,12 +93,20 @@ class Bact {
     }
   }
   void sizeChange() {
+    boolean check = true;
     if (!frozen) {
-
-        if (size.x <= 100) {
-          size.add(new PVector(map(dna[3], 0, 100, 0, 0.1), map(dna[3], 0, 100, 0, 0.1))); 
-          dna[0] = int(size.x);
+      for(int i = 0; i < nutrientsAmount.length; i++){
+        if(nutrientsAmount[i] <= 50){
+          check = false;
         }
       }
+      if (check) {
+        size.add(new PVector(map(dna[3], 0, 100, 0, 0.1), map(dna[3], 0, 100, 0, 0.1))); 
+        dna[0] = int(size.x);
+      }
     }
+  }
+  void nutrientsCollide(Nutrients nutrients) {
+    nutrientsAmount[nutrients.type] = int(nutrients.size.x);
+  }
 }

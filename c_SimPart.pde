@@ -47,5 +47,21 @@ class Simulation { //<>//
     //temperature = temperature+map(noise(frameCount*0.0001),0,1,-50,100);
     //tempSlide.changeX(map(temperature, -50, 100, width*0.5, width*0.7));
     temperature = tempSlide.getPos(-50, 100);
+    for (int i = noNutrients-1; i >= 0; i--) {
+      for (int j = 0; j < noBacts; j++) {
+        if(PVector.dist(bacts.get(j).pos,
+        nutrients.
+        get(
+        i).
+        pos) 
+        <
+        (bacts.get(j).size.x/2)+
+        (nutrients.get(i).size.x/2)){
+          bacts.get(j).nutrientsCollide(nutrients.get(i));
+          nutrients.remove(i);
+          noNutrients--;
+        }
+      }
+    }
   }
 }

@@ -16,10 +16,11 @@ ArrayList<Bact> bacts = new ArrayList<Bact>();
 //int var1, var2, var3;
 
 void setup() {
+  size(600, 600, FX2D);
+  surface.setResizable(false);
   colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
-  size(600, 600, FX2D);
   strokeWeight(1);
   PFont mono = createFont("UbuntuMono.ttf", 26);
   textFont(mono);
@@ -31,8 +32,9 @@ void setup() {
   simulation = new Simulation();
   setting  = new Settings();
   for(int i = 0; i<noNutrients; i++){
-    nutrients.add(new Nutrients(int(random(9)), new PVector(random(width), random(height))));
+    nutrients.add(new Nutrients(0/*int(random(9))*/, new PVector(random(width), random(height)), random(5, 30)));
   }
+  nutrients.get(nutrients.size()-1).type = 5;
 }
 
 void draw() {
@@ -40,13 +42,6 @@ void draw() {
   for(int i = 0; i < noBacts; i++){
    bacts.get(i).move(); 
   }
-  //var1 = int(bacts.size()*0.25);
-  //var2 = int(bacts.size()*0.5);
-  //var3 = int(bacts.size()*0.75);
-  //thread("threaded1");
-  //thread("threaded2");
-  //thread("threaded3");
-  //thread("threaded4");
   if (main) {
     mainMen.display();
   } else if (sim) {
@@ -64,25 +59,3 @@ void draw() {
     }
   }
 }
-
-//void threaded1(){
-//  for(int i = 0; i < var1; i++){
-//    bacts.get(i).move();
-//  }
-//}
-
-//void threaded2(){
-//  for(int i = var1; i < var2; i++){
-//    bacts.get(i).move();
-//  }
-//}
-//void threaded3(){
-//  for(int i = var2; i < var3; i++){
-//    bacts.get(i).move();
-//  }
-//}
-//void threaded4(){
-//  for(int i = var3; i < bacts.size(); i++){
-//    bacts.get(i).move();
-//  }
-//}
