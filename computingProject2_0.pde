@@ -10,13 +10,20 @@ Settings setting;
 int noBacts = 1;
 int noNutrients = 100;
 
-
+SecondApplet sa;
 ArrayList<Nutrients> nutrients = new ArrayList<Nutrients>();
 ArrayList<Bact> bacts = new ArrayList<Bact>();
 //int var1, var2, var3;
+void settings(){
+  size(600, 600, FX2D);
+
+}
 
 void setup() {
-  size(600, 600, FX2D);
+  
+  String[] args = {"computingProject2_0"};
+  sa = new SecondApplet();
+  PApplet.runSketch(args, sa);
   surface.setResizable(false);
   colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
@@ -35,6 +42,7 @@ void setup() {
     nutrients.add(new Nutrients(0/*int(random(9))*/, new PVector(random(width), random(height)), random(5, 30)));
   }
   nutrients.get(nutrients.size()-1).type = 5;
+  surface.setLocation(0, 0);
 }
 
 void draw() {
