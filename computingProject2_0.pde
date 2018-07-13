@@ -6,13 +6,14 @@ boolean setted = false;
 
 Main mainMen;
 Simulation simulation;
-Settings setting;
 int noBacts = 1;
 int noNutrients = 100;
 
-SecondApplet sa;
+
 ArrayList<Nutrients> nutrients = new ArrayList<Nutrients>();
 ArrayList<Bact> bacts = new ArrayList<Bact>();
+
+SecondApplet sa;
 //int var1, var2, var3;
 void settings(){
   size(600, 600, FX2D);
@@ -20,7 +21,12 @@ void settings(){
 }
 
 void setup() {
-  
+  strokeWeight(1);
+  PFont mono = createFont("UbuntuMono.ttf", 26);
+  textFont(mono);
+  for (int i = 0; i<noBacts; i++) {
+    bacts.add(new Bact(new PVector(random(0, width), random(0, height))));
+  }
   String[] args = {"computingProject2_0"};
   sa = new SecondApplet();
   PApplet.runSketch(args, sa);
@@ -28,16 +34,11 @@ void setup() {
   colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
-  strokeWeight(1);
-  PFont mono = createFont("UbuntuMono.ttf", 26);
-  textFont(mono);
+
   mainMen = new Main();
-  for (int i = 0; i<noBacts; i++) {
-    bacts.add(new Bact(new PVector(random(0, width), random(0, height))));
-  }
-  setting = new Settings();
+
   simulation = new Simulation();
-  setting  = new Settings();
+  
   for(int i = 0; i<noNutrients; i++){
     nutrients.add(new Nutrients(0/*int(random(9))*/, new PVector(random(width), random(height)), random(5, 30)));
   }
@@ -55,9 +56,9 @@ void draw() {
   } else if (sim) {
     simulation.run();
   } else if (settings) {
-    setting.changeSlider();
+    
     setted = true;
-    setting.display();
+    
   } 
   text(frameRate, width*0.9, height*0.1);
   for (int i = 0; i<noBacts; i++) {
