@@ -1,10 +1,10 @@
 class Main {
-  int noButts = 3;
+  int noButts = 2;
   Button[] buttons = new Button[noButts]; 
-  String[] buttonText = {"Go", "Set values", "Quit"};
+  String[] buttonText = {"Go", "Quit"};
   Main() {
     for (int i = 0; i<noButts; i++) {
-      buttons[i] = new Button(new PVector(width*0.5, height*(0.3*(i+1))), new PVector(width*0.2, height*0.1), buttonText[i]);
+      buttons[i] = new Button(new PVector(width*0.5, height*(0.3*(i+1))), new PVector(width*0.2, height*0.15), buttonText[i]);
     }
   }
   
@@ -23,9 +23,6 @@ class Main {
       main = false;
       sim = true;
     } else if (buttons[1].clicked()) {
-      settings = true;
-      main = false;
-    } else if (buttons[2].clicked()) {
       exit();
     }
   }

@@ -48,8 +48,8 @@ class Bact {
   }
   void move() {
     if (!frozen) {
-      if (pos.x >= width-size.x/2 || pos.x <= size.x/2) {
-        pos.x = constrain(pos.x, size.x/2, width-size.x/2);
+      if (pos.x >= (width*0.75)-size.x/2 || pos.x <= size.x/2) {
+        pos.x = constrain(pos.x, size.x/2, (width*0.75)-size.x/2);
         vel.rotate(PI);
       }
       if (pos.y >= height-size.y/2 || pos.y <= size.y/2) {
