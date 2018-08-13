@@ -62,4 +62,7 @@ class ScrollBar {
     sSize.y = size.y;
     newPos = sPos;
   }
+  void changePos(float sXPos){
+    changeX(sXPos);
+  }
 }

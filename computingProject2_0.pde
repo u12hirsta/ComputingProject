@@ -4,8 +4,8 @@ boolean sim = false;
 
 Main mainMen;
 Simulation simulation;
-SliderHolder slider;
-int noBacts = 20;
+SliderHolder sliderHolder;
+int noBacts = 1;
 int noNutrients = 100;
 
 
@@ -15,8 +15,7 @@ ArrayList<Bact> bacts = new ArrayList<Bact>();
 
 //int var1, var2, var3;
 void settings(){
-  size(1200, 600, FX2D);
-
+  fullScreen();
 }
 
 void setup() {
@@ -30,17 +29,16 @@ void setup() {
   colorMode(HSB, 360, 100, 100);
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
-  slider = new SliderHolder();
+  sliderHolder = new SliderHolder();
   mainMen = new Main();
   simulation = new Simulation();
   for(int i = 0; i<noNutrients; i++){
-    nutrients.add(new Nutrients(0/*int(random(9))*/, new PVector(random(width*0.75), random(height)), random(5, 30)));
+    nutrients.add(new Nutrients(int(random(9)), new PVector(random(width*0.60 ), random(height)), random(5, 30)));
   }
   nutrients.get(nutrients.size()-1).type = 5;
 }
 
 void draw() {
-  frameRate(60);
   for(int i = 0; i < noBacts; i++){
    bacts.get(i).move(); 
   }
@@ -49,7 +47,6 @@ void draw() {
   } else if (sim) {
     simulation.run();
   }
-  text(frameRate, width*0.9, height*0.1);
   for (int i = 0; i<noBacts; i++) {
     if (bacts.get(i).size.x <= 0.99) {
       bacts.remove(i);

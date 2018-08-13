@@ -48,8 +48,8 @@ class Bact {
   }
   void move() {
     if (!frozen) {
-      if (pos.x >= (width*0.75)-size.x/2 || pos.x <= size.x/2) {
-        pos.x = constrain(pos.x, size.x/2, (width*0.75)-size.x/2);
+      if (pos.x >= (width*0.60)-size.x/2 || pos.x <= size.x/2) {
+        pos.x = constrain(pos.x, size.x/2, (width*0.60)-size.x/2);
         vel.rotate(PI);
       }
       if (pos.y >= height-size.y/2 || pos.y <= size.y/2) {
@@ -69,6 +69,20 @@ class Bact {
       dna[i] = int(random(0, 100));
     }
   }
+  void multiply() {
+    if (!frozen) {
+
+      breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+      //if (noBacts < 1000) {
+      size.div(2);
+      dna[0] = dna[0]/2;
+      bacts.add(new Bact(this)); 
+      noBacts++;
+      for(int i = 0; i<sliderHolder.noSliders; i++){
+       sliderHolder.slider[i].changeSlide(); 
+      }
+    }
+  }
   void change() {
     size = new PVector(map(dna[0], 0, 100, 2, 100), map(dna[0], 0, 100, 2, 100));
   }
@@ -82,21 +96,12 @@ class Bact {
       }
     }
   }
-  void multiply() {
-    if (!frozen) {
 
-      breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
-      //if (noBacts < 1000) {
-      size.div(2);
-      bacts.add(new Bact(this)); 
-      noBacts++;
-    }
-  }
   void sizeChange() {
     boolean check = true;
     if (!frozen) {
-      for(int i = 0; i < nutrientsAmount.length; i++){
-        if(nutrientsAmount[i] <= 50){
+      for (int i = 0; i < nutrientsAmount.length; i++) {
+        if (nutrientsAmount[i] <= 50) {
           check = false;
         }
       }
