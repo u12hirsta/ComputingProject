@@ -21,8 +21,13 @@ class Simulation { //<>//
     }
     for (int i = 0; i<noBacts; i++) {
       if (bacts.get(i).size.x <= 1) {
-        bacts.remove(i); 
-        noBacts--;
+        if (noBacts == 1) {
+          main = true;
+          sim = false;
+        } else {
+          bacts.remove(i); 
+          noBacts--;
+        }
       }
     }
     if (menu.clicked()) {

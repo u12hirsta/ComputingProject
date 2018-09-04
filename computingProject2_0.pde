@@ -5,7 +5,7 @@ boolean sim = false;
 Main mainMen;
 Simulation simulation;
 SliderHolder sliderHolder;
-int noBacts = 1;
+int noBacts = 20;
 int noNutrients = 100;
 
 

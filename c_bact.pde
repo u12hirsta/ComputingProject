@@ -7,6 +7,7 @@ class Bact {
   float maxVel = 2.5;
   int cellWallThickness;
   boolean frozen = false;
+  boolean selected;
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.
     int(random(0, 100)), // Mutation chance
     int(random(0, 100)), // Hue value
@@ -24,7 +25,7 @@ class Bact {
     this.pos = pos;
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
-    breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+    breedCoolDown = int(map(dna[3], 0, 100, 60, 300));
     cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
   }
   Bact(Bact self) {
@@ -35,7 +36,7 @@ class Bact {
     }
     this.size = self.size.copy();
     vel = new PVector(random(minVel, maxVel), random(minVel, maxVel));
-    breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+    breedCoolDown = int(map(dna[3], 0, 100, 60, 300));
     cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
     arrayCopy(self.nutrientsAmount, this.nutrientsAmount);
   }
@@ -44,6 +45,10 @@ class Bact {
     strokeWeight(round(map(dna[5], 0, 100, 1, 10)));
     fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
+    if (selected ) {
+      strokeWeight(3);
+      line(pos.x-(size.x*0.5), pos.x+(size.x*0.5), pos.y-(size.y*0.5), pos.y+(size.y*0.5));
+    }
   }
   void move() {
     if (!frozen) {
@@ -71,7 +76,7 @@ class Bact {
   void multiply() {
     if (!frozen) {
 
-      breedCoolDown = int(map(dna[3], 0, 100, 0, 300));
+      breedCoolDown = int(map(dna[3], 0, 100, 60, 300));
       //if (noBacts < 1000) {
       size.div(2);
       dna[0] = dna[0]/2;
