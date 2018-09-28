@@ -1,4 +1,4 @@
-class IncreaseDecrease {
+class IncreaseDecrease { // The class which holds the dna name, and value and has the scroll bar as well
   float y;
   ScrollBar scroll;
   String firstText, value;
@@ -13,6 +13,7 @@ class IncreaseDecrease {
       , new PVector(width*0.25, height*0.025), map(bacts.get(bactNo).dna[val], 0, 100, x-width*0.125, x+width*0.125));
   } 
   void display() {
+    bactNo = sliderHolder.bactNum;
     scroll.display();
     scroll.update();
   }
@@ -20,8 +21,8 @@ class IncreaseDecrease {
     scroll.changePos(map(bacts.get(bactNo).dna[val], 0, 100, x-width*0.125, x+width*0.125));
   }
   void increase(int val) {
-    bacts.get(bactNo).dna[val] = int(scroll.getPos(0, 100));
-    bacts.get(bactNo).change();
+      bacts.get(bactNo).dna[val] = int(scroll.getPos(0, 100));
+      bacts.get(bactNo).change();
   }
   void textDisplay(String firstText, String value) {
     fill(0, 0, 100);

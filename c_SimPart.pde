@@ -1,36 +1,47 @@
-class Simulation { //<>//
-  Button menu = new Button(new PVector(width*0.05, height*0.025), new PVector(width*0.1, height*0.05), "Menu");
-
-  float temperature = random(-50, 100);
+class Simulation { // The class where the bacteria are simulated from //<>//
+  Button menu = new Button(new PVector(width*0.05, height*0.025), new PVector(width*0.1, height*0.05), "Menu"); 
+  float temperature = random(-50, 100); // Temperature effects the bacteria's speed and growth rate
   ScrollBar tempSlide = new ScrollBar(new PVector(width*0.6, height*0.97), new PVector(width*0.2, height*0.05), map(temperature, -50, 100, width*0.5, width*0.7));
-  Simulation() {
+  Simulation() { // Constructor is blank because nothing needs to be passed into it
   }
   void run() {
     strokeWeight(1);
     background(0, 0, 20);
+    text(bacts.get(sliderHolder.bactNum).hunger, width*0.5, height*0.9);
     sliderHolder.display();
-    for (int i = 0; i < noNutrients; i++) {
-      nutrients.get(i).display();
+    for (int i = 0; i < noFood; i++) {
+      food.get(i).display();
     }
 
-    for (int i = 0; i<noBacts; i++) {
+    for (int i = 0; i<bacts.size(); i++) {
       bacts.get(i).display();
-      bacts.get(i).move();
+      bacts.get(i).move();  // Different functions in the Bacteria class
       bacts.get(i).breedCheck();
       bacts.get(i).sizeChange();
+      if (bacts.get(i).dead && bacts.size() >= 1) {
+        bacts.remove(i);
+      }else if(bacts.get(i).dead && bacts.size() == 1) {
+       sim = false;
+       main = true;
+      }
+      if (bacts.get(i).clicked() && mousePressed) { // If the bacteria is clicked then they can change the dna values of the bacteria
+        sliderHolder.bactNum = i;
+      }
     }
-    for (int i = 0; i<noBacts; i++) {
+    for (int i = 0; i<bacts.size(); i++) {
       if (bacts.get(i).size.x <= 1) {
-        if (noBacts == 1) {
-          main = true;
+        if (bacts.size() == 1) {
           sim = false;
+          main = true; // When the last bacteria dies the it goes back to the menu
         } else {
+          if (sliderHolder.bactNum == i && i != 1 && sliderHolder.bactNum == bacts.size()) {
+            sliderHolder.bactNum--; // If the bacteria dies and it is not the last one then it removes it.
+          }
           bacts.remove(i); 
-          noBacts--;
         }
       }
     }
-    if (menu.clicked()) {
+    if (menu.clicked()) { // If the menu button is clicked then the simulation ends and it goes back to the menu
       main = true;
       sim = false;
     }
@@ -40,12 +51,12 @@ class Simulation { //<>//
     tempSlide.display();
     tempSlide.update();
     fill(0, 0, 100);
-    if (temperature > -20) {
-      for (int i = 0; i < noBacts; i++) {
+    if (temperature > -20) { // If the temperature is less than 20 they will freeze which will mean they won't move, breed or change size
+      for (int i = 0; i < bacts.size(); i++) {
         bacts.get(i).frozen = false;
       }
     } else if (temperature < -20) {
-      for (int i = 0; i < noBacts; i++) {
+      for (int i = 0; i < bacts.size(); i++) {
         bacts.get(i).frozen = true;
       }
     }
@@ -53,12 +64,12 @@ class Simulation { //<>//
     //temperature = temperature+map(noise(frameCount*0.0001),0,1,-50,100);
     //tempSlide.changeX(map(temperature, -50, 100, width*0.5, width*0.7));
     temperature = tempSlide.getPos(-50, 100);
-    for (int j = 0; j < noBacts; j++) {
-      for (int i = noNutrients-1; i >= 0; i--) {
-        if (PVector.dist(bacts.get(j).pos, nutrients.get(i).pos) <(bacts.get(j).size.x/2)+(nutrients.get(i).size.x/2)) {
-          bacts.get(j).nutrientsCollide(nutrients.get(i));
-          nutrients.remove(i);
-          noNutrients--;
+    for (int j = 0; j < bacts.size(); j++) {
+      for (int i = noFood-1; i >= 0; i--) {
+        if (PVector.dist(bacts.get(j).pos, food.get(i).pos) <(bacts.get(j).size.x/2)+(food.get(i).size.x/2)) {
+          bacts.get(j).foodCollide(food.get(i));
+          food.remove(i);
+          noFood--;
         }
       }
     }

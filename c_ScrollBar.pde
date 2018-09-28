@@ -1,11 +1,11 @@
-class ScrollBar {
+class ScrollBar { // Custom class similar to the button but for all the scroll bars I use
   PVector pos, size;
   PVector newPos = new PVector();  
   PVector sSize = new PVector();  
   PVector sPos = new PVector();  
   boolean over, locked;
   float minPos, maxPos; 
-  int smooth = 17;
+  int smooth = 17; 
   ScrollBar(PVector pos, PVector size, float sXPos) {
     this.pos = new PVector();
     this.pos = pos;
@@ -15,7 +15,7 @@ class ScrollBar {
     maxPos = pos.x+size.x/2;
     changeX(sXPos);
   }
-  
+
   void update() {
     if (overEvent()) {
       over = true;
@@ -31,7 +31,7 @@ class ScrollBar {
       newPos.x = constrain(mouseX, minPos, maxPos);
     }
     if (abs(newPos.x - sPos.x) > 1) {
-      sPos.x = sPos.x + (newPos.x-sPos.x)/smooth;
+      sPos.x = sPos.x + (newPos.x-sPos.x)/smooth; // smooth was meant to make it slide slower but didn't work properly
     }
   }
   boolean overEvent() {
@@ -52,17 +52,17 @@ class ScrollBar {
     }
     rect(sPos.x, sPos.y, sSize.x, sSize.y);
   }
-  float getPos(int min, int max){
-   return map(sPos.x, minPos, maxPos, min, max);
-  }
-  void changeX(float sXPos){
+  float getPos(int min, int max) {
+    return map(sPos.x, minPos, maxPos, min, max); // Maps the position of the slider to the values they choose, so that complicated maths doesn't need to be repeated elsewhere
+  } //in the program 
+  void changeX(float sXPos) { // This is for when the bar is dragged
     sPos.y = pos.y;
     sPos.x = sXPos;
     sSize.x = size.x/16;
     sSize.y = size.y;
     newPos = sPos;
   }
-  void changePos(float sXPos){
+  void changePos(float sXPos) {
     changeX(sXPos);
   }
 }
