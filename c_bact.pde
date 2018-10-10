@@ -125,8 +125,8 @@ class Bact { // The actual Bacterium function
     }
   }
   void temperature(){ 
-    growthRate = (((growthRate*map(simulation.temperature, -50, 100, 0.1, 2))/map(bacts.size(), 1, 500, 0.1, 5))*map(hunger, 0, 1000, 0, 2)); //If the temp is higher the growth rate increases and if there are too many bacts it decreases
-    vel.mult(map(simulation.temperature, -50, 100, 0.1, 2)*(hunger<500?map(hunger, 0, 500, 0, 1):map(hunger, 500, 1000, 1, 0))); // Vel is increased or slowed depending on temp
+    growthRate = (((growthRate*map(simulation.temperature, -50, 100, 0.1, 2))/map(bacts.size(), 1, 500, 0.1, 5)));//*map(hunger, 0, 1000, 0, 2)); //If the temp is higher the growth rate increases and if there are too many bacts it decreases
+    vel.mult(map(simulation.temperature, -50, 100, 0.1, 2)*(hunger<500?map(hunger, 0, 500, 0, 1):map(hunger, 500, 1000, 1, 0))*map(size.x, 0, 100, 1, 0.01)); // Vel is increased or slowed depending on temp
     breedCoolDown=breedCoolDown/map(simulation.temperature, -50, 100, 0.1, 2); // breeding is increased of slowed depending on temp
   }
   void hyperthermia(){ // hyperthermia is death by heat

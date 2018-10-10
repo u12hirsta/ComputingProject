@@ -1,0 +1,3 @@
+Buttons with question marks "?" are information about that part of the program; 
+For example this is the menu, you can either go into the simulation or quit, which will close the program. 
+This is where the Zold evolve, the evolution is purely on the breeding and the dna, their dna could potentially mutate everytime they multiply. Then these factors which mutate can be cause natural selection because the dna will increase their chances of survival when confronted with the enviromental factors, including food and temperature.
