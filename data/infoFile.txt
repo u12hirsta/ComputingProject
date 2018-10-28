@@ -1,3 +1,6 @@
 Buttons with question marks "?" are information about that part of the program; 
 For example this is the menu, you can either go into the simulation or quit, which will close the program. 
-This is where the Zold evolve, the evolution is purely on the breeding and the dna, their dna could potentially mutate everytime they multiply. Then these factors which mutate can be cause natural selection because the dna will increase their chances of survival when confronted with the enviromental factors, including food and temperature.
+This is where the Zold evolve, the evolution is purely on the breeding and the dna, their dna could potentially mutate every time they multiply. Then these factors which mutate can be cause natural selection because the dna will increase their chances of survival when confronted with the environmental factors, including food and temperature.
+My program is based on a theory known as UCA or universal common ancestor, which means that every organism on earth evolved from a single ancestor, in my case I am representing this with a single celled organism which can move around but will evolve on their own. 
+Here is a link about UCA "https://news.nationalgeographic.com/news/2010/05/100513-science-evolution-darwin-single-ancestor/"
+You can see that natural selection is occurring because generally out of the 20 Zold species at the beginning there will be one or two different Zold species which survive.

@@ -7,7 +7,7 @@ class Simulation { // The class where the bacteria are simulated from //<>//
   InfoPopUp infoPop;
   Simulation() { // Constructor is blank because nothing needs to be passed into it
     popup = new Button(new PVector(width*0.05, height*0.9), new PVector(height*0.1, height*0.1), "?");
-    int[] nums = {2};
+    int[] nums = {2, 3, 4, 5};
     infoPop = new InfoPopUp(nums);
   }
   void run() {
