@@ -1,7 +1,7 @@
 // Computing project version 2.0
 boolean main = true; // checking which part of the system they are on
 boolean sim = false;
-
+int saveTimer = 300;
 
 Main mainMen;  // Defining of class of each part of the program
 Simulation simulation; // Main sim
@@ -17,10 +17,13 @@ ArrayList<Food> food = new ArrayList<Food>();
 int[] linePassed = {0, 1};
 
 String[] lines;
+Table table;
+
 
 //int var1, var2, var3;
 void settings() { // settings is only run at start
   fullScreen(); // Makes the canvas full screen
+
 }
 
 void setup() { // Only calls once, after settings is called
@@ -29,6 +32,10 @@ void setup() { // Only calls once, after settings is called
   //for (int i = 0; i < lines.length; i++) {
   //  println(lines[i]);
   //}
+  table = new Table();
+  table.addColumn("Generation");
+  table.addColumn("Hue Value");
+  table.addColumn("Hunger Decrease");
   strokeWeight(1);
   infoPop = new InfoPopUp(linePassed);
   PFont mono = createFont("UbuntuMono.ttf", 26); // sets the text font to a mono because all the letters all the same length 
@@ -58,4 +65,21 @@ void draw() { // Draw is run every frame
   } else if (sim) {
     simulation.run();
   }
+  table();
+}
+void table(){
+  if(saveTimer == 0){
+    saveTimer = 300;
+    saveTable(table, "data/colourValues.csv", "csv");
+  }
+  else {
+   saveTimer--; 
+  }
+}
+
+void addToTable(Bact bact){
+  TableRow newRow = table.addRow();
+  newRow.setInt("Generation", bact.gen);
+  newRow.setInt("Hue Value", int(map(bact.dna[2], 0, 100, 0, 360)));
+  newRow.setInt("Hunger Decrease", bact.dna[7]);
 }

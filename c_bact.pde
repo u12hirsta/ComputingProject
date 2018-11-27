@@ -11,6 +11,7 @@ class Bact { // The actual Bacterium function
   boolean dead = false;
   boolean selected;
   int timer = 0;
+  int gen = 1;
   int hunger = int(random(500, 1000));
   int[] dna = {int(random(0, 100)), // Diameter //Numbers between 0 and a 100 represent each of the DNA values.0
     int(random(0, 100)), // Mutation chance 1
@@ -31,9 +32,11 @@ class Bact { // The actual Bacterium function
     size = new PVector(map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER), map(dna[0], 0, 100, MIN_DIAMETER, MAX_DIAMETER));
     breedCoolDown = int(map(dna[3], 0, 100, 60, 300));
     cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
+    addToTable(this);
   }
   Bact(Bact self) { // Second constructor for when the bacteria breeds, so that they can have the same dna (and a mutation)
     this.pos = self.pos.copy();
+    this.gen=self.gen+1;
     arrayCopy(self.dna, this.dna);
     for (int i = 0; i < dna.length; i++) {
       if (random(100)<dna[1]) dna[i] = int((dna[i]+int(random(-1, 1))+100)%100);
@@ -43,6 +46,8 @@ class Bact { // The actual Bacterium function
     breedCoolDown = int(map(dna[3], 0, 100, 60, 300));
     cellWallThickness = int(map(dna[5], 0, 100, 1, 10));
     //arrayCopy(self.nutrientsAmount, this.nutrientsAmount);
+    addToTable(this);
+    
   }
   void display() {
 
@@ -53,7 +58,7 @@ class Bact { // The actual Bacterium function
       rect(pos.x, pos.y, size.x*1.5, size.y*1.5); //  Adds a rectangle around the bacteria, so that you know it is the one which is selected
     }
     stroke(200, 0, 0);
-    strokeWeight(round(map(dna[5], 0, 100, 1, 10)));
+    strokeWeight(round(map(dna[5], 0, 100, 1, 10)));  
     fill(map(dna[2], 0, 100, 0, 360), 100, 100);
     ellipse(pos.x, pos.y, size.x, size.y);
   }

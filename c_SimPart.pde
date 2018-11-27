@@ -5,7 +5,7 @@ class Simulation { // The class where the bacteria are simulated from //<>//
   ScrollBar tempSlide = new ScrollBar(new PVector(width*0.6, height*0.97), new PVector(width*0.2, height*0.05), map(temperature, -50, 100, width*0.5, width*0.7));
   Button popup;
   InfoPopUp infoPop;
-  Simulation() { // Constructor is blank because nothing needs to be passed into it
+  Simulation() {
     popup = new Button(new PVector(width*0.05, height*0.9), new PVector(height*0.1, height*0.1), "?");
     int[] nums = {2, 3, 4, 5};
     infoPop = new InfoPopUp(nums);

@@ -21,8 +21,8 @@ class IncreaseDecrease { // The class which holds the dna name, and value and ha
     scroll.changePos(map(bacts.get(bactNo).dna[val], 0, 100, x-width*0.125, x+width*0.125));
   }
   void increase(int val) {
-      bacts.get(bactNo).dna[val] = int(scroll.getPos(0, 100));
-      bacts.get(bactNo).change();
+    bacts.get(bactNo).dna[val] = int(scroll.getPos(0, 100));
+    bacts.get(bactNo).change();
   }
   void textDisplay(String firstText, String value) {
     fill(0, 0, 100);

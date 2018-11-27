@@ -1,4 +1,4 @@
-  class InfoPopUp {
+class InfoPopUp {
   PVector pos;
   String displayText = "";
   int[] num;
